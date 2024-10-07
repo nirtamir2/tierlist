@@ -13,7 +13,7 @@ type Tier = {
 
 export function TierList(props: { tiers: Array<Tier> }) {
   return (
-    <ul class="flex flex-col gap-2">
+    <ul class="flex flex-col gap-2 bg-gray-800">
       <For each={props.tiers}>
         {(tier) => (
           <li class="flex">
@@ -29,6 +29,11 @@ export function TierList(props: { tiers: Array<Tier> }) {
               class="grow rounded-r-lg bg-gradient-to-r from-gray-800 to-gray-700 p-2"
               style={{
                 "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${tier.color}, transparent 10%)`,
+                "background-image": `linear-gradient(
+                to bottom,
+                color-mix(in lch, ${tier.color}, transparent 80%),
+                color-mix(in lch, ${tier.color}, transparent 99%)
+                )`,
               }}
             >
               <div class="flex flex-wrap gap-2">
