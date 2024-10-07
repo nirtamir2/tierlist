@@ -25,6 +25,7 @@
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/solid-query": "^5.56.2",
     "autoprefixer": "^10.4.19",
+    "clsx": "^2.1.1",
     "jiti": "^2.3.1",
     "postcss": "^8.4.40",
     "solid-js": "^1.8.23",
