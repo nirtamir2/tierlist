@@ -194,7 +194,7 @@ function DraggableItem(props: {
     <div
       class={clsx(
         isDragging() && "opacity-20",
-        isDropping() && "border",
+        isDropping() && "flex border",
         isDropping() &&
           droppingDirection() === "left" &&
           "after:absolute after:content-['Left']",
@@ -204,6 +204,12 @@ function DraggableItem(props: {
       )}
       ref={dropRef}
     >
+      <div
+        class={clsx(
+          "transition-[width]",
+          isDropping() && droppingDirection() === "left" ? "size-28" : "w-0",
+        )}
+      />
       <div ref={dragRef}>
         <Show
           when={props.imageSrc}
@@ -222,6 +228,12 @@ function DraggableItem(props: {
           />
         </Show>
       </div>
+      <div
+        class={clsx(
+          "transition-[width]",
+          isDropping() && droppingDirection() === "right" ? "size-28" : "w-0",
+        )}
+      />
     </div>
   );
 }
