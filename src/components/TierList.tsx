@@ -48,7 +48,7 @@ export function TierList(props: { tiers: Array<Tier> }) {
                       }
                     >
                       <img
-                        class="aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
+                        class="filter-blur aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
                         src={item.imageSrc}
                         alt={item.text}
                         height={112}

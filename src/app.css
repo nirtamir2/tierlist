@@ -33,3 +33,9 @@
     z-index: -1;
   }
 }
+
+@layer utilities {
+  .filter-blur {
+    filter: url(#blur-and-scale);
+  }
+}
