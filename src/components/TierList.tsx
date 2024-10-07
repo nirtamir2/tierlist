@@ -29,12 +29,6 @@ export function TierList(props: { tiers: Array<Tier> }) {
               class="grow rounded-r-lg bg-gradient-to-r from-gray-800 to-gray-700 p-2"
               style={{
                 "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${tier.color}, transparent 10%)`,
-                "background-image": `radial-gradient(
-                ${tier.color} 0px,
-                ${tier.color}10 1px
-                )`,
-                "background-size": "20px 20px",
-                "background-position": "5px 5px",
               }}
             >
               <div class="flex flex-wrap gap-2">
