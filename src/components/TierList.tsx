@@ -48,7 +48,7 @@ export function TierList(props: { tiers: Array<Tier> }) {
                       }
                     >
                       <img
-                        class="aspect-square min-w-28 rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 object-cover transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md"
+                        class="aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
                         src={item.imageSrc}
                         alt={item.text}
                         height={112}
