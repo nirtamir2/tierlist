@@ -5,7 +5,7 @@ export const helloQuery = helloBuilder
   .input(
     z.object({
       hello: z.string(),
-    })
+    }),
   )
   .query$(({ payload, ctx$ }) => {
     if (payload.hello === "hello") {

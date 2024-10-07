@@ -26,6 +26,4 @@ This will start a production server on port `3000`.
 
 ### Enviroment Variables
 
-  
-  
 [Sponsor Create JD App](https://github.com/sponsors/OrJDev)
