@@ -20,6 +20,7 @@
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3",
     "@solid-mediakit/prpc": "^1.2.5",
     "@solid-mediakit/prpc-plugin": "^1.3.4",
+    "@solid-primitives/media": "^2.2.9",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.5",
     "@solidjs/start": "^1.0.6",
