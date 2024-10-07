@@ -1,7 +1,7 @@
 import type { VoidComponent } from "solid-js";
 import { Show } from "solid-js";
-import { TierList } from "~/components/TierList";
 import { helloQuery } from "~/server/hello/hello.queries";
+import { ClientOnlyTierList } from "../components/ClientOnlyTierList";
 
 const Home: VoidComponent = () => {
   const tiers = helloQuery(() => ({ hello: "from pRPC" }));
@@ -14,7 +14,7 @@ const Home: VoidComponent = () => {
       </div>
       <Show when={tiers.data}>
         {(data) => {
-          return <TierList tiers={data()} />;
+          return <ClientOnlyTierList tiers={data()} />;
         }}
       </Show>
     </div>

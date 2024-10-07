@@ -225,7 +225,7 @@ function DraggableItem(props: {
   );
 }
 
-export function TierList(props: { tiers: Array<Tier> }) {
+export default function _TierList(props: { tiers: Array<Tier> }) {
   return (
     <ul class="flex flex-col gap-2 bg-gray-800">
       <For each={props.tiers}>
