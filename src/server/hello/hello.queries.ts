@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { helloBuilder } from "../prpc";
+import { mockTiers } from "./mockTiers";
 
 export const helloQuery = helloBuilder
   .input(
@@ -7,9 +8,6 @@ export const helloQuery = helloBuilder
       hello: z.string(),
     }),
   )
-  .query$(({ payload, ctx$ }) => {
-    if (payload.hello === "hello") {
-      return ctx$.hello;
-    }
-    return ctx$.world;
+  .query$(() => {
+    return mockTiers;
   }, "myNewQuery");
