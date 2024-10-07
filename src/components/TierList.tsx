@@ -36,28 +36,30 @@ export function TierList(props: { tiers: Array<Tier> }) {
                 )`,
               }}
             >
-              <div class="flex flex-wrap gap-2">
+              <ul class="flex flex-wrap gap-2">
                 <For each={tier.items}>
                   {(item) => (
-                    <Show
-                      when={item.imageSrc}
-                      fallback={
-                        <div class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md">
-                          {item.text}
-                        </div>
-                      }
-                    >
-                      <img
-                        class="aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
-                        src={item.imageSrc}
-                        alt={item.text}
-                        height={112}
-                        width={112}
-                      />
-                    </Show>
+                    <li>
+                      <Show
+                        when={item.imageSrc}
+                        fallback={
+                          <div class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md">
+                            {item.text}
+                          </div>
+                        }
+                      >
+                        <img
+                          class="aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
+                          src={item.imageSrc}
+                          alt={item.text}
+                          height={112}
+                          width={112}
+                        />
+                      </Show>
+                    </li>
                   )}
                 </For>
-              </div>
+              </ul>
             </div>
           </li>
         )}
