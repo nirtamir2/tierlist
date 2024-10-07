@@ -12,24 +12,4 @@
     );
     color: theme(colors.white);
   }
-
-  body::before {
-    --size: 45px;
-    --line: color-mix(in lch, white, transparent 70%);
-    content: "";
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    opacity: 0.4;
-    background-image: radial-gradient(
-      theme(colors.gray.400) 1px,
-      theme(colors.gray.800) 1px
-    );
-    background-size: 20px 20px;
-    mask: linear-gradient(-20deg, transparent 50%, white);
-    top: 0;
-    transform-style: flat;
-    pointer-events: none;
-    z-index: -1;
-  }
 }

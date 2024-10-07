@@ -30,7 +30,7 @@ export function TierList(props: { tiers: Array<Tier> }) {
               style={{
                 "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${tier.color}, transparent 10%)`,
                 "background-image": `radial-gradient(
-                ${tier.color} 1px,
+                ${tier.color} 0px,
                 ${tier.color}10 1px
                 )`,
                 "background-size": "20px 20px",
@@ -43,13 +43,13 @@ export function TierList(props: { tiers: Array<Tier> }) {
                     <Show
                       when={item.imageSrc}
                       fallback={
-                        <div class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-700 to-gray-600 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-600 hover:to-gray-500 hover:shadow-md">
+                        <div class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md">
                           {item.text}
                         </div>
                       }
                     >
                       <img
-                        class="aspect-square min-w-28 rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-700 to-gray-600 object-cover transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-600 hover:to-gray-500 hover:shadow-md"
+                        class="aspect-square min-w-28 rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 object-cover transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md"
                         src={item.imageSrc}
                         alt={item.text}
                         height={112}
