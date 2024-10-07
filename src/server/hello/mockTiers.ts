@@ -23,7 +23,7 @@ export const mockTiers: Array<{
         id: "Item 2",
         text: "Item 2",
         imageSrc:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6QZ5W67MtcDA25ERyU7Z-Jd2pIp-aDVB_pg&s",
+          "https://www.solidjs.com/img/blog/solid-start-the-shape-frameworks-to-come/header.jpeg",
       },
       { id: "Item 3", text: "Item 3", imageSrc: undefined },
     ],
