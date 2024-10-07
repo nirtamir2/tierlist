@@ -208,13 +208,13 @@ function DraggableItem(props: {
         <Show
           when={props.imageSrc}
           fallback={
-            <div class="flex aspect-square min-w-14 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:min-w-28">
+            <div class="flex aspect-square size-14 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 text-center transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:size-28">
               {props.text}
             </div>
           }
         >
           <img
-            class="pointer-events-none aspect-square min-w-14 select-none rounded-xl object-fill drop-shadow-md sm:min-w-28"
+            class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
             src={props.imageSrc}
             alt={props.text}
             height={size()}
