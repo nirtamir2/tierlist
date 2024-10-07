@@ -25,16 +25,19 @@ type Tier = {
 
 type DraggableData = {
   itemId: string;
+  tierId: string;
 };
 
 type DroppableeData = {
   droppableItemId: string;
+  tierId: string;
 };
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 
 function DraggableItem(props: {
   id: string;
+  tierId: string;
   text: string;
   imageSrc: string | undefined;
 }) {
@@ -51,6 +54,7 @@ function DraggableItem(props: {
         getInitialData: ({ input, element }) => {
           const data: DraggableData = {
             itemId: props.id,
+            tierId: props.tierId,
           };
           return attachClosestEdge(data, {
             input,
@@ -85,6 +89,7 @@ function DraggableItem(props: {
           // your base data you want to attach to the drop target
           const data: DroppableeData = {
             droppableItemId: props.id,
+            tierId: props.tierId,
           };
           // this will 'attach' the closest edge to your `data` object
           return attachClosestEdge(data, {
@@ -112,7 +117,7 @@ function DraggableItem(props: {
           setIsDragging(false);
           // eslint-disable-next-line no-alert
           confirm(
-            `Reorder ${draggableData.itemId} to the ${closestEdgeOfTarget} of ${droppableData.droppableItemId}`,
+            `Reorder ${draggableData.itemId} from ${draggableData.tierId}. Moving it to ${droppableData.tierId} - the ${closestEdgeOfTarget} of ${droppableData.droppableItemId}`,
           );
         },
       }),
@@ -188,6 +193,7 @@ export function TierList(props: { tiers: Array<Tier> }) {
                   {(item) => (
                     <li>
                       <DraggableItem
+                        tierId={tier.id}
                         text={item.text}
                         id={item.id}
                         imageSrc={item.imageSrc}
