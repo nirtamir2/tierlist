@@ -98,7 +98,7 @@ function DraggableItem(props: {
   imageSrc: string | undefined;
   allData: Array<TierData>;
 }) {
-  let ref: HTMLDivElement | HTMLImageElement = null!;
+  let dragRef: HTMLDivElement = null!;
   let dropRef: HTMLDivElement = null!;
   const [isDragging, setIsDragging] = createSignal(false);
   const [isDropping, setIsDropping] = createSignal(false);
@@ -107,7 +107,7 @@ function DraggableItem(props: {
   createEffect(() => {
     const cleanup = combine(
       draggable({
-        element: ref,
+        element: dragRef,
         getInitialData: ({ input, element }) => {
           const data: DraggableData = {
             itemId: props.id,
@@ -201,26 +201,24 @@ function DraggableItem(props: {
       )}
       ref={dropRef}
     >
-      <Show
-        when={props.imageSrc}
-        fallback={
-          <div
-            ref={ref}
-            class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md"
-          >
-            {props.text}
-          </div>
-        }
-      >
-        <img
-          ref={ref}
-          class="aspect-square min-w-28 rounded-xl object-fill drop-shadow-md"
-          src={props.imageSrc}
-          alt={props.text}
-          height={112}
-          width={112}
-        />
-      </Show>
+      <div ref={dragRef}>
+        <Show
+          when={props.imageSrc}
+          fallback={
+            <div class="flex aspect-square min-w-28 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md">
+              {props.text}
+            </div>
+          }
+        >
+          <img
+            class="pointer-events-none aspect-square min-w-28 select-none rounded-xl object-fill drop-shadow-md"
+            src={props.imageSrc}
+            alt={props.text}
+            height={112}
+            width={112}
+          />
+        </Show>
+      </div>
     </div>
   );
 }
