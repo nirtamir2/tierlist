@@ -1,13 +1,6 @@
-export const mockTiers: Array<{
-  id: string;
-  name: string;
-  color: string;
-  items: Array<{
-    id: string;
-    text: string;
-    imageSrc: string | undefined;
-  }>;
-}> = [
+import type { TierData } from "./TierData";
+
+export const mockTiers: Array<TierData> = [
   {
     id: "S",
     name: "S",

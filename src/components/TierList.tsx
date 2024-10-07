@@ -11,6 +11,8 @@ import {
 import { scrollJustEnoughIntoView } from "@atlaskit/pragmatic-drag-and-drop/element/scroll-just-enough-into-view";
 import { clsx } from "clsx";
 import { For, Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { unwrap } from "solid-js/store";
+import type { TierData } from "../server/hello/TierData";
 
 type Tier = {
   id: string;
@@ -35,11 +37,66 @@ type DroppableeData = {
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 
+function getUpdatedData(data: {
+  allData: Array<TierData>;
+  draggableData: DraggableData;
+  droppableData: DroppableeData;
+  closestEdgeOfTarget: Edge;
+}): Array<TierData> {
+  const { draggableData, droppableData, closestEdgeOfTarget } = data;
+  const allData = unwrap(data.allData);
+  const fromTier = allData.find((item) => item.id === draggableData.tierId);
+  if (fromTier == null) {
+    throw new Error("Not valid");
+  }
+  const removeItem = fromTier.items.find(
+    (item) => item.id === draggableData.itemId,
+  );
+  if (removeItem == null) {
+    throw new Error("Not valid");
+  }
+  const removeIndex = fromTier.items.indexOf(removeItem);
+  if (removeIndex === -1) {
+    throw new Error("Not valid");
+  }
+
+  const toTier = allData.find((item) => item.id === droppableData.tierId);
+  if (toTier == null) {
+    throw new Error("Not valid");
+  }
+
+  const dropItem = toTier.items.find(
+    (item) => item.id === droppableData.droppableItemId,
+  );
+
+  if (dropItem == null) {
+    throw new Error("Not valid");
+  }
+
+  const dropIndex = toTier.items.indexOf(dropItem);
+
+  if (dropIndex === -1) {
+    throw new Error("Not valid");
+  }
+
+  fromTier.items.splice(removeIndex, 1);
+  toTier.items.splice(
+    closestEdgeOfTarget === "right"
+      ? Math.min(dropIndex + 1, allData.length - 1)
+      : dropIndex,
+    0,
+    removeItem,
+  );
+
+  return allData;
+}
+
 function DraggableItem(props: {
   id: string;
   tierId: string;
   text: string;
   imageSrc: string | undefined;
+  allData: Array<TierData>;
 }) {
   let ref: HTMLDivElement | HTMLImageElement = null!;
   let dropRef: HTMLDivElement = null!;
@@ -108,17 +165,22 @@ function DraggableItem(props: {
           }
         },
         onDrop: (args) => {
-          const closestEdgeOfTarget: Edge | null = extractClosestEdge(
-            args.self.data,
-          );
+          const closestEdgeOfTarget: Edge | null =
+            extractClosestEdge(args.self.data) ?? "left";
           const droppableData = args.self.data as DroppableeData;
           const draggableData = args.source.data as DraggableData;
           setIsDropping(false);
           setIsDragging(false);
-          // eslint-disable-next-line no-alert
-          confirm(
-            `Reorder ${draggableData.itemId} from ${draggableData.tierId}. Moving it to ${droppableData.tierId} - the ${closestEdgeOfTarget} of ${droppableData.droppableItemId}`,
-          );
+
+          const updatedData = getUpdatedData({
+            allData: props.allData,
+            draggableData,
+            droppableData,
+            closestEdgeOfTarget,
+          });
+
+          // eslint-disable-next-line no-console
+          console.log("updatedData", updatedData);
         },
       }),
     );
@@ -193,6 +255,7 @@ export function TierList(props: { tiers: Array<Tier> }) {
                   {(item) => (
                     <li>
                       <DraggableItem
+                        allData={props.tiers}
                         tierId={tier.id}
                         text={item.text}
                         id={item.id}
