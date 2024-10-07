@@ -1,7 +1,7 @@
 import type { VoidComponent } from "solid-js";
 import { Show } from "solid-js";
+import { TierList } from "~/components/TierList";
 import { helloQuery } from "~/server/hello/hello.queries";
-import { TierList } from "../components/TierList";
 
 const Home: VoidComponent = () => {
   const tiers = helloQuery(() => ({ hello: "from pRPC" }));
