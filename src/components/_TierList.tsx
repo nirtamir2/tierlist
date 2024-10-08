@@ -12,19 +12,10 @@ import { scrollJustEnoughIntoView } from "@atlaskit/pragmatic-drag-and-drop/elem
 import { createMediaQuery } from "@solid-primitives/media";
 import { clsx } from "clsx";
 import { For, Show, createEffect, createSignal, onCleanup } from "solid-js";
-import { unwrap } from "solid-js/store";
+import type { SetStoreFunction } from "solid-js/store";
+import { createStore, produce } from "solid-js/store";
 import type { TierData } from "../server/hello/TierData";
-
-type Tier = {
-  id: string;
-  name: string;
-  color: string;
-  items: Array<{
-    id: string;
-    text: string;
-    imageSrc: string | undefined;
-  }>;
-};
+import { mockTiers } from "../server/hello/mockTiers";
 
 type DraggableData = {
   itemId: string;
@@ -38,66 +29,13 @@ type DroppableeData = {
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 
-function getUpdatedData(data: {
-  allData: Array<TierData>;
-  draggableData: DraggableData;
-  droppableData: DroppableeData;
-  closestEdgeOfTarget: Edge;
-}): Array<TierData> {
-  const { draggableData, droppableData, closestEdgeOfTarget } = data;
-  const allData = unwrap(data.allData);
-  const fromTier = allData.find((item) => item.id === draggableData.tierId);
-  if (fromTier == null) {
-    throw new Error("Not valid");
-  }
-  const removeItem = fromTier.items.find(
-    (item) => item.id === draggableData.itemId,
-  );
-  if (removeItem == null) {
-    throw new Error("Not valid");
-  }
-  const removeIndex = fromTier.items.indexOf(removeItem);
-  if (removeIndex === -1) {
-    throw new Error("Not valid");
-  }
-
-  const toTier = allData.find((item) => item.id === droppableData.tierId);
-  if (toTier == null) {
-    throw new Error("Not valid");
-  }
-
-  const dropItem = toTier.items.find(
-    (item) => item.id === droppableData.droppableItemId,
-  );
-
-  if (dropItem == null) {
-    throw new Error("Not valid");
-  }
-
-  const dropIndex = toTier.items.indexOf(dropItem);
-
-  if (dropIndex === -1) {
-    throw new Error("Not valid");
-  }
-
-  fromTier.items.splice(removeIndex, 1);
-  toTier.items.splice(
-    closestEdgeOfTarget === "right"
-      ? Math.min(dropIndex + 1, allData.length - 1)
-      : dropIndex,
-    0,
-    removeItem,
-  );
-
-  return allData;
-}
-
 function DraggableItem(props: {
   id: string;
   tierId: string;
   text: string;
   imageSrc: string | undefined;
   allData: Array<TierData>;
+  setTiersStore: SetStoreFunction<{ tiers: Array<TierData> }>;
 }) {
   let dragRef: HTMLDivElement = null!;
   let dropRef: HTMLDivElement = null!;
@@ -174,15 +112,61 @@ function DraggableItem(props: {
           setIsDropping(false);
           setIsDragging(false);
 
-          const updatedData = getUpdatedData({
-            allData: props.allData,
-            draggableData,
-            droppableData,
-            closestEdgeOfTarget,
-          });
+          props.setTiersStore(
+            "tiers",
+            produce((data) => {
+              // eslint-disable-next-line sonarjs/no-nested-functions
+              const fromTier = data.find((item) => {
+                return item.id === draggableData.tierId;
+              });
+              if (fromTier == null) {
+                throw new Error("Not valid");
+              }
+              const removeItem = fromTier.items.find(
+                // eslint-disable-next-line sonarjs/no-nested-functions
+                (item) => item.id === draggableData.itemId,
+              );
+              if (removeItem == null) {
+                throw new Error("Not valid");
+              }
+              const removeIndex = fromTier.items.indexOf(removeItem);
+              if (removeIndex === -1) {
+                throw new Error("Not valid");
+              }
 
-          // eslint-disable-next-line no-console
-          console.log("updatedData", updatedData);
+              // eslint-disable-next-line sonarjs/no-nested-functions
+              const toTier = data.find((item) => {
+                return item.id === droppableData.tierId;
+              });
+              if (toTier == null) {
+                throw new Error("Not valid");
+              }
+
+              const dropItem = toTier.items.find(
+                // eslint-disable-next-line sonarjs/no-nested-functions
+                (item) => item.id === droppableData.droppableItemId,
+              );
+
+              if (dropItem == null) {
+                throw new Error("Not valid");
+              }
+
+              const dropIndex = toTier.items.indexOf(dropItem);
+
+              if (dropIndex === -1) {
+                throw new Error("Not valid");
+              }
+
+              fromTier.items.splice(removeIndex, 1);
+              toTier.items.splice(
+                closestEdgeOfTarget === "right"
+                  ? Math.min(dropIndex + 1, data.length - 1)
+                  : dropIndex,
+                0,
+                removeItem,
+              );
+            }),
+          );
         },
       }),
     );
@@ -218,15 +202,16 @@ function DraggableItem(props: {
               {props.text}
             </div>
           }
-        >
-          <img
-            class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
-            src={props.imageSrc}
-            alt={props.text}
-            height={size()}
-            width={size()}
-          />
-        </Show>
+          children={
+            <img
+              class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
+              src={props.imageSrc}
+              alt={props.text}
+              height={size()}
+              width={size()}
+            />
+          }
+        />
       </div>
       <div
         class={clsx(
@@ -238,11 +223,15 @@ function DraggableItem(props: {
   );
 }
 
-export default function _TierList(props: { tiers: Array<Tier> }) {
+export default function _TierList() {
+  const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
+    tiers: mockTiers,
+  });
   return (
     <ul class="flex flex-col gap-2 bg-gray-800">
-      <For each={props.tiers}>
-        {(tier) => (
+      <For
+        each={tiersStore.tiers}
+        children={(tier) => (
           <li class="flex">
             <div
               class="flex min-h-32 min-w-16 items-center justify-center rounded-l-lg text-2xl font-bold sm:min-w-32"
@@ -264,24 +253,26 @@ export default function _TierList(props: { tiers: Array<Tier> }) {
               }}
             >
               <ul class="flex flex-wrap gap-2">
-                <For each={tier.items}>
-                  {(item) => (
+                <For
+                  each={tier.items}
+                  children={(item) => (
                     <li>
                       <DraggableItem
-                        allData={props.tiers}
+                        allData={tiersStore.tiers}
                         tierId={tier.id}
                         text={item.text}
                         id={item.id}
                         imageSrc={item.imageSrc}
+                        setTiersStore={setTiersStore}
                       />
                     </li>
                   )}
-                </For>
+                />
               </ul>
             </div>
           </li>
         )}
-      </For>
+      />
     </ul>
   );
 }
