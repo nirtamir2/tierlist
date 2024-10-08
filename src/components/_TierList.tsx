@@ -22,7 +22,7 @@ type DraggableData = {
   tierId: string;
 };
 
-type DroppableeData = {
+type DroppableData = {
   droppableItemId: string;
   tierId: string;
 };
@@ -84,7 +84,7 @@ function DraggableItem(props: {
         },
         getData: ({ input, element }) => {
           // your base data you want to attach to the drop target
-          const data: DroppableeData = {
+          const data: DroppableData = {
             droppableItemId: props.id,
             tierId: props.tierId,
           };
@@ -96,7 +96,7 @@ function DraggableItem(props: {
           });
         },
         onDropTargetChange: (args) => {
-          const droppableData = args.self.data as DroppableeData;
+          const droppableData = args.self.data as DroppableData;
           // const draggableData = args.source.data as DraggableData;
           setIsDropping(droppableData.droppableItemId === props.id);
           const closestEdgeOfTarget = extractClosestEdge(droppableData);
@@ -107,7 +107,7 @@ function DraggableItem(props: {
         onDrop: (args) => {
           const closestEdgeOfTarget: Edge | null =
             extractClosestEdge(args.self.data) ?? "left";
-          const droppableData = args.self.data as DroppableeData;
+          const droppableData = args.self.data as DroppableData;
           const draggableData = args.source.data as DraggableData;
           setIsDropping(false);
           setIsDragging(false);
