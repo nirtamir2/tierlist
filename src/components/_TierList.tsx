@@ -214,7 +214,7 @@ export default function _TierList() {
             // moving to a new column
             moveItemToOtherTier({
               itemIndexInStartColumn: itemIndex,
-              itemIndexInFinishColumn: 0, //put it as the first
+              itemIndexInFinishColumn: destinationColumn.items.length, //put it as the end
               startTierId: sourceTier.id,
               finishTierId: destinationColumn.id,
             });

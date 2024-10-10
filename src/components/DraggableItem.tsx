@@ -103,40 +103,38 @@ export function DraggableItem(props: {
   const size = () => (isSmallScreen() ? 56 : 112);
 
   return (
-    <div class="flex">
+    <div
+      class={clsx(
+        "flex h-full",
+        isDragging() && "opacity-20",
+        isDropping() && "flex border",
+        isDropping() &&
+          droppingDirection() === "left" &&
+          "after:absolute after:content-['Left']",
+        isDropping() &&
+          droppingDirection() === "right" &&
+          "after:absolute after:content-['Right']",
+      )}
+      ref={ref}
+    >
       <Separator isVisible={isDropping() && droppingDirection() === "left"} />
-      <div
-        class={clsx(
-          "flex h-full",
-          isDragging() && "opacity-20",
-          isDropping() && "flex border",
-          isDropping() &&
-            droppingDirection() === "left" &&
-            "after:absolute after:content-['Left']",
-          isDropping() &&
-            droppingDirection() === "right" &&
-            "after:absolute after:content-['Right']",
-        )}
-        ref={ref}
-      >
-        <Show
-          when={props.imageSrc}
-          fallback={
-            <div class="flex aspect-square size-14 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 text-center transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:size-28">
-              {props.text}
-            </div>
-          }
-          children={
-            <img
-              class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
-              src={props.imageSrc}
-              alt={props.text}
-              height={size()}
-              width={size()}
-            />
-          }
-        />
-      </div>
+      <Show
+        when={props.imageSrc}
+        fallback={
+          <div class="flex aspect-square size-14 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 text-center transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:size-28">
+            {props.text}
+          </div>
+        }
+        children={
+          <img
+            class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
+            src={props.imageSrc}
+            alt={props.text}
+            height={size()}
+            width={size()}
+          />
+        }
+      />
       <Separator isVisible={isDropping() && droppingDirection() === "right"} />
     </div>
   );
