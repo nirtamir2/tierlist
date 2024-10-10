@@ -18,6 +18,8 @@ import { Separator } from "./Separator";
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 
+const isDebug = false;
+
 export function DraggableItem(props: {
   id: string;
   tierId: string;
@@ -108,13 +110,15 @@ export function DraggableItem(props: {
       class={clsx(
         "flex h-full",
         isDragging() && "opacity-20",
-        isDropping() && "flex border",
-        isDropping() &&
-          droppingDirection() === "left" &&
-          "after:absolute after:content-['Left']",
-        isDropping() &&
-          droppingDirection() === "right" &&
-          "after:absolute after:content-['Right']",
+        isDebug && [
+          isDropping() && "border",
+          isDropping() &&
+            droppingDirection() === "left" &&
+            "after:absolute after:content-['Left']",
+          isDropping() &&
+            droppingDirection() === "right" &&
+            "after:absolute after:content-['Right']",
+        ],
       )}
       ref={ref}
     >
