@@ -4,8 +4,8 @@ export function Separator(props: { isVisible: boolean }) {
   return (
     <div
       class={clsx(
-        "pointer-events-none select-none transition-[width]",
-        props.isVisible ? "size-14 sm:size-28" : "w-0",
+        "pointer-events-none w-1 select-none",
+        props.isVisible ? "bg-white" : "bg-transparent",
       )}
     />
   );
