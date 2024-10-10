@@ -68,7 +68,6 @@ export function DraggableItem(props: {
           // Make sure not to allow dragging to the same element
           return draggableData.itemId !== props.id;
         },
-        getIsSticky: () => true,
         onDragLeave: () => {
           setIsDropping(false);
         },
