@@ -1,224 +1,87 @@
 import type { Edge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
-import {
-  attachClosestEdge,
-  extractClosestEdge,
-} from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
+import { getReorderDestinationIndex } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import {
-  draggable,
   dropTargetForElements,
+  monitorForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { scrollJustEnoughIntoView } from "@atlaskit/pragmatic-drag-and-drop/element/scroll-just-enough-into-view";
-import { createMediaQuery } from "@solid-primitives/media";
+import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import { clsx } from "clsx";
-import { For, Show, createEffect, createSignal, onCleanup } from "solid-js";
-import type { SetStoreFunction } from "solid-js/store";
-import { createStore, produce } from "solid-js/store";
+import { For, createEffect, createSignal, onCleanup } from "solid-js";
+import { createStore } from "solid-js/store";
 import type { TierData } from "../server/hello/TierData";
 import { mockTiers } from "../server/hello/mockTiers";
+import type { DraggableData } from "./DraggableData";
+import { DraggableItem } from "./DraggableItem";
+import type { DroppableData } from "./DroppableData";
 
-type DraggableData = {
-  itemId: string;
-  tierId: string;
-};
-
-type DroppableData = {
-  droppableItemId: string;
-  tierId: string;
-};
-
-const allowedEdges = ["left", "right"] satisfies Array<Edge>;
-
-function DraggableItem(props: {
-  id: string;
-  tierId: string;
-  text: string;
-  imageSrc: string | undefined;
-  allData: Array<TierData>;
-  setTiersStore: SetStoreFunction<{ tiers: Array<TierData> }>;
-}) {
-  let dragRef: HTMLDivElement = null!;
-  let dropRef: HTMLDivElement = null!;
-  const [isDragging, setIsDragging] = createSignal(false);
+function Tier(props: { index: number; tier: TierData }) {
+  let tierRef: HTMLDivElement = null!;
   const [isDropping, setIsDropping] = createSignal(false);
-  const [droppingDirection, setDroppingDirection] = createSignal<Edge>("left");
-  const isSmallScreen = createMediaQuery("(max-width: 767px)");
 
   createEffect(() => {
     const cleanup = combine(
-      draggable({
-        element: dragRef,
-        getInitialData: ({ input, element }) => {
-          const data: DraggableData = {
-            itemId: props.id,
-            tierId: props.tierId,
-          };
-          return attachClosestEdge(data, {
-            input,
-            element,
-            allowedEdges,
-          });
-        },
-        onGenerateDragPreview({ source }) {
-          scrollJustEnoughIntoView({ element: source.element });
-        },
-        onDragStart: () => {
-          setIsDragging(true);
-        },
-        onDrop: () => {
-          setIsDragging(false);
-        },
-      }),
       dropTargetForElements({
-        element: dropRef,
-        canDrop: ({ source }) => {
-          const draggableData = source.data as DraggableData;
-          // Make sure not to allow dragging to the same element
-          return draggableData.itemId !== props.id;
-        },
+        element: tierRef,
         onDragLeave: () => {
           setIsDropping(false);
         },
         onDragEnter: () => {
           setIsDropping(true);
         },
-        getData: ({ input, element }) => {
-          // your base data you want to attach to the drop target
-          const data: DroppableData = {
-            droppableItemId: props.id,
-            tierId: props.tierId,
+        getData: () => {
+          const data: DroppableData<"tier"> = {
+            type: "tier",
+            droppableItemId: null,
+            tierId: props.tier.id,
+            tierIndex: props.index,
+            itemIndex: null,
           };
-          // this will 'attach' the closest edge to your `data` object
-          return attachClosestEdge(data, {
-            input,
-            element,
-            allowedEdges,
-          });
+          return data;
         },
         onDropTargetChange: (args) => {
-          const droppableData = args.self.data as DroppableData;
-          // const draggableData = args.source.data as DraggableData;
-          setIsDropping(droppableData.droppableItemId === props.id);
-          const closestEdgeOfTarget = extractClosestEdge(droppableData);
-          if (closestEdgeOfTarget != null) {
-            setDroppingDirection(closestEdgeOfTarget);
-          }
-        },
-        onDrop: (args) => {
-          const closestEdgeOfTarget: Edge | null =
-            extractClosestEdge(args.self.data) ?? "left";
-          const droppableData = args.self.data as DroppableData;
-          const draggableData = args.source.data as DraggableData;
-          setIsDropping(false);
-          setIsDragging(false);
-
-          props.setTiersStore(
-            "tiers",
-            produce((data) => {
-              // eslint-disable-next-line sonarjs/no-nested-functions
-              const fromTier = data.find((item) => {
-                return item.id === draggableData.tierId;
-              });
-              if (fromTier == null) {
-                throw new Error("Not valid");
-              }
-              const removeItem = fromTier.items.find(
-                // eslint-disable-next-line sonarjs/no-nested-functions
-                (item) => item.id === draggableData.itemId,
-              );
-              if (removeItem == null) {
-                throw new Error("Not valid");
-              }
-              const removeIndex = fromTier.items.indexOf(removeItem);
-              if (removeIndex === -1) {
-                throw new Error("Not valid");
-              }
-
-              // eslint-disable-next-line sonarjs/no-nested-functions
-              const toTier = data.find((item) => {
-                return item.id === droppableData.tierId;
-              });
-              if (toTier == null) {
-                throw new Error("Not valid");
-              }
-
-              const dropItem = toTier.items.find(
-                // eslint-disable-next-line sonarjs/no-nested-functions
-                (item) => item.id === droppableData.droppableItemId,
-              );
-
-              if (dropItem == null) {
-                throw new Error("Not valid");
-              }
-
-              const dropIndex = toTier.items.indexOf(dropItem);
-
-              if (dropIndex === -1) {
-                throw new Error("Not valid");
-              }
-
-              fromTier.items.splice(removeIndex, 1);
-              toTier.items.splice(
-                closestEdgeOfTarget === "right"
-                  ? Math.min(dropIndex + 1, data.length - 1)
-                  : dropIndex,
-                0,
-                removeItem,
-              );
-            }),
-          );
+          const droppableData = args.self.data as DroppableData<"tier">;
+          setIsDropping(droppableData.tierId === props.tier.id);
         },
       }),
     );
     onCleanup(cleanup);
   });
 
-  const size = () => (isSmallScreen() ? 56 : 112);
   return (
     <div
+      ref={tierRef}
       class={clsx(
-        isDragging() && "opacity-20",
-        isDropping() && "flex border",
-        isDropping() &&
-          droppingDirection() === "left" &&
-          "after:absolute after:content-['Left']",
-        isDropping() &&
-          droppingDirection() === "right" &&
-          "after:absolute after:content-['Right']",
+        "grow rounded-r-lg border bg-gradient-to-r from-gray-800 to-gray-700 p-2",
+        isDropping() ? "border-white" : "border-transparent",
       )}
-      ref={dropRef}
+      style={{
+        "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${props.tier.color}, transparent 10%)`,
+        "background-image": `linear-gradient(
+                to bottom,
+                color-mix(in lch, ${props.tier.color}, transparent 80%),
+                color-mix(in lch, ${props.tier.color}, transparent 99%)
+                )`,
+      }}
     >
-      <div
-        class={clsx(
-          "transition-[width]",
-          isDropping() && droppingDirection() === "left" ? "size-28" : "w-0",
-        )}
-      />
-      <div ref={dragRef}>
-        <Show
-          when={props.imageSrc}
-          fallback={
-            <div class="flex aspect-square size-14 cursor-pointer items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 text-center transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:size-28">
-              {props.text}
-            </div>
-          }
-          children={
-            <img
-              class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
-              src={props.imageSrc}
-              alt={props.text}
-              height={size()}
-              width={size()}
-            />
-          }
+      <ul class="flex flex-wrap">
+        <For
+          each={props.tier.items}
+          children={(item, index) => (
+            <li>
+              <DraggableItem
+                itemIndex={index()}
+                tierId={props.tier.id}
+                tierIndex={props.index}
+                text={item.text}
+                id={item.id}
+                imageSrc={item.imageSrc}
+              />
+            </li>
+          )}
         />
-      </div>
-      <div
-        class={clsx(
-          "transition-[width]",
-          isDropping() && droppingDirection() === "right" ? "size-28" : "w-0",
-        )}
-      />
+      </ul>
     </div>
   );
 }
@@ -227,11 +90,193 @@ export default function _TierList() {
   const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
     tiers: mockTiers,
   });
+
+  function reorderItem({
+    finishIndex,
+    startIndex,
+    tierId,
+  }: {
+    finishIndex: number;
+    startIndex: number;
+    tierId: string;
+  }) {
+    setTiersStore((prevData) => {
+      return {
+        tiers: prevData.tiers.map((tier) => {
+          if (tier.id !== tierId) {
+            return tier;
+          }
+          return {
+            ...tier,
+            items: reorder({
+              list: tier.items,
+              startIndex,
+              finishIndex,
+            }),
+          };
+        }),
+      };
+    });
+  }
+
+  function moveItemToOtherTier({
+    startTierId,
+    finishTierId,
+    itemIndexInStartColumn,
+    itemIndexInFinishColumn,
+  }: {
+    finishTierId: string;
+    itemIndexInStartColumn: number;
+    itemIndexInFinishColumn: number;
+    startTierId: string;
+  }) {
+    setTiersStore((prevData) => {
+      const sourceTier = prevData.tiers.find((tier) => tier.id === startTierId);
+      const destinationTier = prevData.tiers.find(
+        (tier) => tier.id === finishTierId,
+      );
+      const item = sourceTier.items[itemIndexInStartColumn];
+
+      const destinationItems = [...destinationTier.items];
+      destinationItems.splice(itemIndexInFinishColumn, 0, item);
+
+      return {
+        tiers: prevData.tiers.map((tier) => {
+          if (tier.id === startTierId) {
+            return {
+              ...tier,
+              // eslint-disable-next-line sonarjs/no-nested-functions
+              items: tier.items.filter((i) => i.id !== item.id),
+            };
+          }
+          if (tier.id === finishTierId) {
+            return {
+              ...tier,
+              items: destinationItems,
+            };
+          }
+          return tier;
+        }),
+      };
+    });
+  }
+
+  createEffect(() => {
+    const cleanup = combine(
+      monitorForElements({
+        onDrop: (args) => {
+          const { location, source } = args;
+
+          // didn't drop on anything
+          if (location.current.dropTargets.length === 0) {
+            return;
+          }
+
+          const draggableData = source.data as DraggableData;
+
+          const { itemId } = draggableData;
+          // TODO: these lines not needed if item has columnId on it
+          const [startTier] = location.initial.dropTargets;
+
+          const startTierData = startTier.data as DroppableData<"tier">;
+          const sourceId = startTierData.tierId;
+          const sourceTier = tiersStore.tiers.find(
+            (tier) => tier.id === sourceId,
+          );
+          const itemIndex = sourceTier.items.findIndex(
+            (item) => item.id === itemId,
+          );
+
+          // Drop on tier without card
+          if (location.current.dropTargets.length === 1) {
+            const [destinationTier] = location.current.dropTargets;
+            const destinationTierData =
+              destinationTier.data as DroppableData<"tier">;
+            const destinationTierId = destinationTierData.tierId;
+            const destinationColumn = tiersStore.tiers.find(
+              (tier) => tier.id === destinationTierId,
+            );
+            // reordering in same column
+            if (sourceTier === destinationColumn) {
+              const destinationIndex = getReorderDestinationIndex({
+                startIndex: itemIndex,
+                indexOfTarget: sourceTier.items.length - 1,
+                closestEdgeOfTarget: null,
+                axis: "horizontal",
+              });
+              reorderItem({
+                tierId: sourceTier.id,
+                startIndex: itemIndex,
+                finishIndex: destinationIndex,
+              });
+              return;
+            }
+            // moving to a new column
+            moveItemToOtherTier({
+              itemIndexInStartColumn: itemIndex,
+              itemIndexInFinishColumn: 0, //put it as the first
+              startTierId: sourceTier.id,
+              finishTierId: destinationColumn.id,
+            });
+            return;
+          }
+          // dropping in a column (relative to a card)
+          if (location.current.dropTargets.length === 2) {
+            const [destinationItemRecord, destinationTierRecord] =
+              location.current.dropTargets;
+            const destinationTierData =
+              destinationTierRecord.data as DroppableData<"tier">;
+            const destinationTierId = destinationTierData.tierId;
+
+            const destinationItemData =
+              destinationItemRecord.data as DroppableData<"item">;
+
+            const destinationTier = tiersStore.tiers.find(
+              (tier) => tier.id === destinationTierId,
+            );
+            const indexOfTarget = destinationTier.items.findIndex(
+              (item) => item.id === destinationItemData.droppableItemId,
+            );
+            const closestEdgeOfTarget: Edge | null =
+              extractClosestEdge(destinationItemData);
+            // case 1: ordering in the same column
+            if (sourceTier === destinationTier) {
+              const destinationIndex = getReorderDestinationIndex({
+                startIndex: itemIndex,
+                indexOfTarget,
+                closestEdgeOfTarget,
+                axis: "horizontal",
+              });
+              reorderItem({
+                tierId: sourceTier.id,
+                startIndex: itemIndex,
+                finishIndex: destinationIndex,
+              });
+              return;
+            }
+            // case 2: moving into a new column relative to a card
+            const destinationIndex =
+              closestEdgeOfTarget === "bottom"
+                ? indexOfTarget + 1
+                : indexOfTarget;
+            moveItemToOtherTier({
+              itemIndexInStartColumn: itemIndex,
+              startTierId: sourceTier.id,
+              finishTierId: destinationTier.id,
+              itemIndexInFinishColumn: destinationIndex,
+            });
+          }
+        },
+      }),
+    );
+    onCleanup(cleanup);
+  });
+
   return (
     <ul class="flex flex-col gap-2 bg-gray-800">
       <For
         each={tiersStore.tiers}
-        children={(tier) => (
+        children={(tier, index) => (
           <li class="flex">
             <div
               class="flex min-h-32 min-w-16 items-center justify-center rounded-l-lg text-2xl font-bold sm:min-w-32"
@@ -241,35 +286,7 @@ export default function _TierList() {
             >
               {tier.name}
             </div>
-            <div
-              class="grow rounded-r-lg bg-gradient-to-r from-gray-800 to-gray-700 p-2"
-              style={{
-                "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${tier.color}, transparent 10%)`,
-                "background-image": `linear-gradient(
-                to bottom,
-                color-mix(in lch, ${tier.color}, transparent 80%),
-                color-mix(in lch, ${tier.color}, transparent 99%)
-                )`,
-              }}
-            >
-              <ul class="flex flex-wrap gap-2">
-                <For
-                  each={tier.items}
-                  children={(item) => (
-                    <li>
-                      <DraggableItem
-                        allData={tiersStore.tiers}
-                        tierId={tier.id}
-                        text={item.text}
-                        id={item.id}
-                        imageSrc={item.imageSrc}
-                        setTiersStore={setTiersStore}
-                      />
-                    </li>
-                  )}
-                />
-              </ul>
-            </div>
+            <Tier index={index()} tier={tier} />
           </li>
         )}
       />
