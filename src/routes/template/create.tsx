@@ -1,5 +1,5 @@
 import type { VoidComponent } from "solid-js";
-import { ClientOnlyTierList } from "../components/ClientOnlyTierList";
+import { ClientOnlyTierList } from "../../components/ClientOnlyTierList";
 
 const Home: VoidComponent = () => {
   return (
