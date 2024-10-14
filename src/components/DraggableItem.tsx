@@ -62,6 +62,7 @@ export function DraggableItem(props: {
         },
       }),
       dropTargetForElements({
+        getIsSticky: () => true,
         element: ref,
         canDrop: ({ source }) => {
           const draggableData = source.data as DraggableData;
