@@ -47,7 +47,7 @@ export function DraggableItem(props: {
           };
           return attachClosestEdge(data, {
             input,
-            element: element.children[2],
+            element: element.children[1],
             allowedEdges,
           });
         },
@@ -84,7 +84,7 @@ export function DraggableItem(props: {
           };
           return attachClosestEdge(data, {
             input,
-            element: element.children[2],
+            element: element.children[1],
             allowedEdges,
           });
         },
