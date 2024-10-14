@@ -65,20 +65,18 @@ function Tier(props: { index: number; tier: TierData }) {
                 )`,
       }}
     >
-      <ul class="flex flex-wrap">
+      <ul class="flex flex-wrap gap-y-4">
         <For
           each={props.tier.items}
           children={(item, index) => (
-            <li>
-              <DraggableItem
-                itemIndex={index()}
-                tierId={props.tier.id}
-                tierIndex={props.index}
-                text={item.text}
-                id={item.id}
-                imageSrc={item.imageSrc}
-              />
-            </li>
+            <DraggableItem
+              itemIndex={index()}
+              tierId={props.tier.id}
+              tierIndex={props.index}
+              text={item.text}
+              id={item.id}
+              imageSrc={item.imageSrc}
+            />
           )}
         />
       </ul>

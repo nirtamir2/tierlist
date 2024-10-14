@@ -107,7 +107,7 @@ export function DraggableItem(props: {
   return (
     <div
       class={clsx(
-        "flex h-full",
+        "relative flex h-full",
         isDragging() && "opacity-20",
         isDebug && [
           isDropping() && "border",
@@ -121,7 +121,10 @@ export function DraggableItem(props: {
       )}
       ref={ref}
     >
-      <Separator isVisible={isDropping() && droppingDirection() === "left"} />
+      <Separator
+        direction="left"
+        isVisible={isDropping() && droppingDirection() === "left"}
+      />
       <Show
         when={props.imageSrc}
         fallback={
@@ -139,7 +142,10 @@ export function DraggableItem(props: {
           />
         }
       />
-      <Separator isVisible={isDropping() && droppingDirection() === "right"} />
+      <Separator
+        direction="right"
+        isVisible={isDropping() && droppingDirection() === "right"}
+      />
     </div>
   );
 }
