@@ -23,7 +23,7 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "noEmit": true,
-    "types": ["vinxi/types/client"],
+    "types": ["vinxi/types/client", "vite-plugin-solid-svg/types"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

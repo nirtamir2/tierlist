@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="buttonGradient1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff5722" />
+      <stop offset="100%" stop-color="#ff9800" />
+    </linearGradient>
+    <linearGradient id="buttonGradient2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4caf50" />
+      <stop offset="100%" stop-color="#8bc34a" />
+    </linearGradient>
+    <linearGradient id="buttonGradient3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#03a9f4" />
+      <stop offset="100%" stop-color="#00bcd4" />
+    </linearGradient>
+    <linearGradient id="circleGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffeb3b" />
+      <stop offset="100%" stop-color="#ff5722" />
+    </linearGradient>
+  </defs>
+  <rect
+    x="20"
+    y="40"
+    width="160"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient1)"
+  />
+  <rect
+    x="20"
+    y="85"
+    width="120"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient2)"
+  />
+  <rect
+    x="20"
+    y="130"
+    width="80"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient3)"
+  />
+  <circle cx="165" cy="55" r="15" fill="url(#circleGradient)" />
+</svg>

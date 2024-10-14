@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Transparent background -->
+
+  <!-- Gradients for branding effect -->
+  <defs>
+    <linearGradient id="buttonGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#666666" />
+      <stop offset="100%" stop-color="#333333" />
+    </linearGradient>
+    <linearGradient id="circleGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0070F3" />
+      <stop offset="100%" stop-color="#00d1f3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded rectangles with gradient -->
+  <rect
+    x="20"
+    y="40"
+    width="160"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient)"
+  />
+  <rect
+    x="20"
+    y="85"
+    width="120"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient)"
+  />
+  <rect
+    x="20"
+    y="130"
+    width="80"
+    height="30"
+    rx="15"
+    ry="15"
+    fill="url(#buttonGradient)"
+  />
+
+  <!-- Gradient circle -->
+  <circle cx="165" cy="55" r="15" fill="url(#circleGradient)" />
+</svg>
