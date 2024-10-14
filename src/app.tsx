@@ -12,7 +12,9 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <Title>Tierlist</Title>
-          <NavBar />
+          <div class="flex w-full justify-center gap-4 px-4 pt-4">
+            <NavBar />
+          </div>
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}
