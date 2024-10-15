@@ -15,6 +15,7 @@ import { Show, createEffect, createSignal, onCleanup } from "solid-js";
 import type { DraggableData } from "./DraggableData";
 import type { DroppableData } from "./DroppableData";
 import { Separator } from "./Separator";
+import { TierItem } from "./TierItem";
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 
@@ -109,7 +110,8 @@ export function DraggableItem(props: {
     <div
       class={clsx(
         "relative flex h-full",
-        isDragging() && "opacity-20",
+        isDragging() && !isDropping() && "hidden",
+        isDragging() && isDropping() && "opacity-20",
         isDebug && [
           isDropping() && "border",
           isDropping() &&
@@ -123,8 +125,10 @@ export function DraggableItem(props: {
       ref={ref}
     >
       <Separator
+        size={size()}
         direction="left"
         isVisible={isDropping() && droppingDirection() === "left"}
+        item={<TierItem imageSrc={""} text={"LEFT"} size={size()} />}
       />
       <Show
         when={props.imageSrc}
@@ -144,8 +148,10 @@ export function DraggableItem(props: {
         }
       />
       <Separator
+        size={size()}
         direction="right"
         isVisible={isDropping() && droppingDirection() === "right"}
+        item={<TierItem imageSrc={""} text={"RIGHT"} size={size()} />}
       />
     </div>
   );

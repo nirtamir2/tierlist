@@ -1,17 +1,23 @@
 import { clsx } from "clsx";
+import type { JSXElement } from "solid-js";
+import { Show } from "solid-js";
 
 export function Separator(props: {
   isVisible: boolean;
   direction: "left" | "right";
+  size: number;
+  item: JSXElement;
 }) {
   return (
     <div class="pointer-events-none relative select-none">
       <div
         class={clsx(
-          "transition-w duration-300",
-          props.isVisible ? "w-36" : "w-2",
+          "transition-w opacity-25 duration-300",
+          !props.isVisible && "w-2",
         )}
-      />
+      >
+        <Show when={props.isVisible}>{props.item}</Show>
+      </div>
     </div>
   );
 }
