@@ -17,7 +17,6 @@ export function Separator(props: {
           "transition-w opacity-40 duration-300",
           !isSmallScreen() && [
             props.direction === "right" ? "translate-x-1" : "-translate-x-1",
-            !props.isVisible && "w-2",
           ],
         )}
         style={
@@ -25,7 +24,9 @@ export function Separator(props: {
             ? {
                 width: `${props.size}px`,
               }
-            : undefined
+            : {
+                width: isSmallScreen() ? `0px` : "8px",
+              }
         }
       >
         <Show when={props.isVisible}>{props.item}</Show>
