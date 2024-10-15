@@ -26,6 +26,9 @@ importers:
       '@solidjs/start':
         specifier: ^1.0.6
         version: 1.0.8(solid-js@1.9.2)(vinxi@0.4.3(@types/node@22.7.5)(ioredis@5.4.1)(terser@5.34.1))(vite@5.4.8(@types/node@22.7.5)(terser@5.34.1))
+      '@thisbeyond/solid-dnd':
+        specifier: ^0.7.5
+        version: 0.7.5(solid-js@1.9.2)
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.20(postcss@8.4.47)
@@ -1654,6 +1657,12 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.40.0'
+
+  '@thisbeyond/solid-dnd@0.7.5':
+    resolution: {integrity: sha512-DfI5ff+yYGpK9M21LhYwIPlbP2msKxN2ARwuu6GF8tT1GgNVDTI8VCQvH4TJFoVApP9d44izmAcTh/iTCH2UUw==}
+    engines: {node: '>=18.0.0', pnpm: '>=8.6.0'}
+    peerDependencies:
+      solid-js: ^1.5
 
   '@total-typescript/ts-reset@0.6.1':
     resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
@@ -7464,6 +7473,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  '@thisbeyond/solid-dnd@0.7.5(solid-js@1.9.2)':
+    dependencies:
+      solid-js: 1.9.2
 
   '@total-typescript/ts-reset@0.6.1': {}
 
