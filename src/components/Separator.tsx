@@ -13,6 +13,7 @@ export function Separator(props: {
       <div
         class={clsx(
           "transition-w opacity-25 duration-300",
+          props.direction === "right" ? "translate-x-1" : "-translate-x-1",
           !props.isVisible && "w-2",
         )}
       >
