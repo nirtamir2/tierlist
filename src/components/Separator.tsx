@@ -12,7 +12,7 @@ export function Separator(props: {
     <div class="pointer-events-none relative select-none">
       <div
         class={clsx(
-          "transition-w opacity-25 duration-300",
+          "transition-w opacity-40 duration-300",
           props.direction === "right" ? "translate-x-1" : "-translate-x-1",
           !props.isVisible && "w-2",
         )}
