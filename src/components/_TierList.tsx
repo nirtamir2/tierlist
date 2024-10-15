@@ -16,7 +16,7 @@ import type { DraggableData } from "./DraggableData";
 import { DraggableItem } from "./DraggableItem";
 import type { DroppableData } from "./DroppableData";
 
-function Tier(props: { index: number; tier: TierData }) {
+function TierRow(props: { index: number; tier: TierData }) {
   let tierRef: HTMLDivElement = null!;
   const [isDropping, setIsDropping] = createSignal(false);
 
@@ -284,7 +284,7 @@ export default function _TierList() {
             >
               {tier.name}
             </div>
-            <Tier index={index()} tier={tier} />
+            <TierRow index={index()} tier={tier} />
           </li>
         )}
       />
