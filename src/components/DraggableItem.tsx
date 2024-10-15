@@ -11,7 +11,7 @@ import {
 import { scrollJustEnoughIntoView } from "@atlaskit/pragmatic-drag-and-drop/element/scroll-just-enough-into-view";
 import { createMediaQuery } from "@solid-primitives/media";
 import { clsx } from "clsx";
-import { Show, createEffect, createSignal, onCleanup } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 import type { DraggableData } from "./DraggableData";
 import type { DroppableData } from "./DroppableData";
 import { Separator } from "./Separator";
@@ -48,7 +48,7 @@ export function DraggableItem(props: {
           };
           return attachClosestEdge(data, {
             input,
-            element: element.children[1],
+            element,
             allowedEdges,
           });
         },
@@ -86,7 +86,7 @@ export function DraggableItem(props: {
           };
           return attachClosestEdge(data, {
             input,
-            element: element.children[1],
+            element,
             allowedEdges,
           });
         },
@@ -107,52 +107,38 @@ export function DraggableItem(props: {
   const size = () => (isSmallScreen() ? 56 : 112);
 
   return (
-    <div
-      class={clsx(
-        "relative flex h-full",
-        isDragging() && !isDropping() && "hidden",
-        isDragging() && isDropping() && "opacity-20",
-        isDebug && [
-          isDropping() && "border",
-          isDropping() &&
-            droppingDirection() === "left" &&
-            "after:absolute after:content-['Left']",
-          isDropping() &&
-            droppingDirection() === "right" &&
-            "after:absolute after:content-['Right']",
-        ],
-      )}
-      ref={ref}
-    >
+    <>
       <Separator
         size={size()}
         direction="left"
         isVisible={isDropping() && droppingDirection() === "left"}
         item={<TierItem imageSrc={""} text={"LEFT"} size={size()} />}
       />
-      <Show
-        when={props.imageSrc}
-        fallback={
-          <div class="flex aspect-square size-14 cursor-pointer select-none items-center justify-center rounded-xl border-4 border-transparent bg-gradient-to-r from-gray-800 to-gray-700 p-2 text-center transition-all duration-300 ease-in-out hover:-translate-y-1 hover:from-gray-700 hover:to-gray-600 hover:shadow-md sm:size-28">
-            {props.text}
-          </div>
-        }
-        children={
-          <img
-            class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
-            src={props.imageSrc}
-            alt={props.text}
-            height={size()}
-            width={size()}
-          />
-        }
-      />
+      <div
+        class={clsx(
+          "relative flex h-full",
+          isDragging() && !isDropping() && "hidden",
+          isDragging() && isDropping() && "opacity-20",
+          isDebug && [
+            isDropping() && "border",
+            isDropping() &&
+              droppingDirection() === "left" &&
+              "after:absolute after:content-['Left']",
+            isDropping() &&
+              droppingDirection() === "right" &&
+              "after:absolute after:content-['Right']",
+          ],
+        )}
+        ref={ref}
+      >
+        <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
+      </div>
       <Separator
         size={size()}
         direction="right"
         isVisible={isDropping() && droppingDirection() === "right"}
         item={<TierItem imageSrc={""} text={"RIGHT"} size={size()} />}
       />
-    </div>
+    </>
   );
 }

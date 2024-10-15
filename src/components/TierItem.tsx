@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 
 export function TierItem(props: {
-  imageSrc: string;
+  imageSrc: string | undefined;
   text: string;
   size: number;
 }) {

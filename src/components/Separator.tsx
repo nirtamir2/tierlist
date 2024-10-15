@@ -1,3 +1,4 @@
+import { createMediaQuery } from "@solid-primitives/media";
 import { clsx } from "clsx";
 import type { JSXElement } from "solid-js";
 import { Show } from "solid-js";
@@ -8,14 +9,24 @@ export function Separator(props: {
   size: number;
   item: JSXElement;
 }) {
+  const isSmallScreen = createMediaQuery("(max-width: 767px)");
   return (
     <div class="pointer-events-none relative select-none">
       <div
         class={clsx(
           "transition-w opacity-40 duration-300",
-          props.direction === "right" ? "translate-x-1" : "-translate-x-1",
-          !props.isVisible && "w-2",
+          !isSmallScreen() && [
+            props.direction === "right" ? "translate-x-1" : "-translate-x-1",
+            !props.isVisible && "w-2",
+          ],
         )}
+        style={
+          props.isVisible
+            ? {
+                width: `${props.size}px`,
+              }
+            : undefined
+        }
       >
         <Show when={props.isVisible}>{props.item}</Show>
       </div>
