@@ -124,10 +124,6 @@ const TierRow = (props: { tier: TierData; id: string }) => {
   );
 };
 
-function error() {
-  throw new Error("Not implemented");
-}
-
 function TierList() {
   const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
     tiers: mockTiers,
@@ -330,13 +326,11 @@ function TierList() {
         <DragOverlay>
           {(draggable) => {
             if (draggable == null || typeof draggable.id !== "string") {
-              error();
               return null;
             }
             const item = tierItemIdToTierData(draggable.id);
 
             if (item == null) {
-              error();
               return null;
             }
 
