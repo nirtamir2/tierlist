@@ -4,6 +4,8 @@
 
 @layer base {
   html {
+    -webkit-touch-callout: none;
+
     min-height: 100dvh;
     background: linear-gradient(
       to bottom right,
