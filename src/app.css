@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  html {
+  body {
     -webkit-touch-callout: none;
 
     min-height: 100dvh;
@@ -16,17 +16,14 @@
     color: theme(colors.white);
   }
 
-  html::before {
-    --size: 45px;
-    --line: color-mix(in lch, white, transparent 70%);
+  body::before {
     content: "";
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
     position: fixed;
-    opacity: 0.4;
     background-image: radial-gradient(
-      theme(colors.gray.400) 1px,
-      theme(colors.gray.800) 1px
+      theme(colors.gray.400 / 40%) 1px,
+      theme(colors.gray.800 / 40%) 1px
     );
     background-size: 20px 20px;
     top: 0;
