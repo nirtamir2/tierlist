@@ -36,7 +36,7 @@ const Sortable = (props: {
     <div
       use:sortable
       class={clsx(
-        "relative flex h-full transition-all",
+        "relative flex h-full transition-[transform,_opacity] will-change-[transform,_opacity]",
         // sortable.isActiveDraggable && !sortable.isActiveDraggable() && "hidden",
         sortable.isActiveDraggable && "opacity-20",
         // isDebug && [
