@@ -37,17 +37,7 @@ const Sortable = (props: {
       use:sortable
       class={clsx(
         "relative flex h-full transition-[transform,_opacity] will-change-[transform,_opacity]",
-        // sortable.isActiveDraggable && !sortable.isActiveDraggable() && "hidden",
         sortable.isActiveDraggable && "opacity-20",
-        // isDebug && [
-        //   isDropping() && "border",
-        //   isDropping() &&
-        //     droppingDirection() === "left" &&
-        //     "after:absolute after:content-['Left']",
-        //   isDropping() &&
-        //     droppingDirection() === "right" &&
-        //     "after:absolute after:content-['Right']",
-        // ],
       )}
     >
       <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
