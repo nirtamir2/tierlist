@@ -34,8 +34,6 @@ const Sortable = (props: {
   const size = () => (isSmallScreen() ? 56 : 112);
   return (
     <div
-      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       use:sortable
       class={clsx(
         "relative flex h-full",
@@ -57,13 +55,21 @@ const Sortable = (props: {
   );
 };
 
+declare module "solid-js" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface Directives {
+      droppable: boolean;
+      sortable: boolean;
+    }
+  }
+}
+
 function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   function id() {
     return props.id;
   }
 
-  //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   const droppable = createDroppable(id());
   function tierIds() {
     return props.tier.items.map((tier) => tier.id);
@@ -71,8 +77,6 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
 
   return (
     <div
-      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       use:droppable
       class={
         "grow rounded-r-lg border bg-gradient-to-r from-gray-800 to-gray-700 p-2"
