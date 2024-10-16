@@ -78,9 +78,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   return (
     <div
       use:droppable
-      class={
-        "grow rounded-r-lg border bg-gradient-to-r from-gray-800 to-gray-700 p-2"
-      }
+      class={"grow rounded-r-lg bg-gradient-to-r from-gray-800 to-gray-700 p-2"}
       style={{
         "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${props.tier.color}, transparent 10%)`,
         "background-image": `linear-gradient(
