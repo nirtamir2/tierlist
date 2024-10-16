@@ -5,6 +5,7 @@
 @layer base {
   body {
     min-height: 100dvh;
+    background-color: theme(colors.gray.900);
     background: linear-gradient(
       to bottom right,
       theme(colors.gray.900),
