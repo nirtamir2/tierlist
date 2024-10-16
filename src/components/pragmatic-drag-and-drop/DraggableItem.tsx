@@ -12,10 +12,10 @@ import { scrollJustEnoughIntoView } from "@atlaskit/pragmatic-drag-and-drop/elem
 import { createMediaQuery } from "@solid-primitives/media";
 import { clsx } from "clsx";
 import { createEffect, createSignal, onCleanup } from "solid-js";
+import { Separator } from "../Separator";
+import { TierItem } from "../TierItem";
 import type { DraggableData } from "./DraggableData";
 import type { DroppableData } from "./DroppableData";
-import { Separator } from "./Separator";
-import { TierItem } from "./TierItem";
 
 const allowedEdges = ["left", "right"] satisfies Array<Edge>;
 

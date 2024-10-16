@@ -128,7 +128,7 @@ function error() {
   throw new Error("Not implemented");
 }
 
-export const TierList2 = () => {
+function TierList() {
   const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
     tiers: mockTiers,
   });
@@ -350,6 +350,6 @@ export const TierList2 = () => {
       </DragDropProvider>
     </ul>
   );
-};
+}
 
-export default TierList2;
+export default TierList;

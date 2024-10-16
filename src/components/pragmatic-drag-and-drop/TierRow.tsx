@@ -2,7 +2,7 @@ import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { clsx } from "clsx";
 import { For, createEffect, createSignal, onCleanup } from "solid-js";
-import type { TierData } from "../server/hello/TierData";
+import type { TierData } from "../../server/hello/TierData";
 import { DraggableItem } from "./DraggableItem";
 import type { DroppableData } from "./DroppableData";
 

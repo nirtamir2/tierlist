@@ -6,8 +6,8 @@ import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/ad
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import { For, createEffect, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
-import type { TierData } from "../server/hello/TierData";
-import { mockTiers } from "../server/hello/mockTiers";
+import type { TierData } from "../../server/hello/TierData";
+import { mockTiers } from "../../server/hello/mockTiers";
 import type { DraggableData } from "./DraggableData";
 import type { DroppableData } from "./DroppableData";
 import { TierRow } from "./TierRow";
