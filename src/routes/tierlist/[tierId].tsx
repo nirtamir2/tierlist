@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import type { VoidComponent } from "solid-js";
-import { ClientOnlyTierList } from "../../components/ClientOnlyTierList";
+import { TierList } from "../../components/tierlist/TierList";
 
 const TierRoute: VoidComponent = () => {
   const params = useParams() as { id: string };
@@ -12,7 +12,7 @@ const TierRoute: VoidComponent = () => {
           Tier List {params.id}
         </h1>
       </div>
-      <ClientOnlyTierList />
+      <TierList />
     </div>
   );
 };

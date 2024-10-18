@@ -12,7 +12,7 @@ import type { DraggableData } from "./DraggableData";
 import type { DroppableData } from "./DroppableData";
 import { TierRow } from "./TierRow";
 
-export default function _TierList() {
+export default function _PragmaticTierList() {
   const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
     tiers: mockTiers,
   });
@@ -61,7 +61,15 @@ export default function _TierList() {
       const destinationTier = prevData.tiers.find(
         (tier) => tier.id === finishTierId,
       );
+
+      if (sourceTier == null || destinationTier == null) {
+        throw new Error("error");
+      }
       const item = sourceTier.items[itemIndexInStartColumn];
+
+      if (item == null) {
+        throw new Error("error");
+      }
 
       const destinationItems = [...destinationTier.items];
       destinationItems.splice(itemIndexInFinishColumn, 0, item);

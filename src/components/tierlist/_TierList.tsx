@@ -14,11 +14,21 @@ import {
   createSortable,
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
-import { For, batch } from "solid-js";
-import { createStore } from "solid-js/store";
-import type { TierData } from "../server/hello/TierData";
-import { mockTiers } from "../server/hello/mockTiers";
-import { TierItem } from "./TierItem";
+import { For } from "solid-js";
+import type { Store } from "solid-js/store";
+import type { TierData } from "../../server/hello/TierData";
+import { TierItem } from "../TierItem";
+import { useTiersContext } from "./TiersContext";
+
+declare module "solid-js" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface Directives {
+      droppable: boolean;
+      sortable: boolean;
+    }
+  }
+}
 
 const Sortable = (props: {
   id: string;
@@ -45,25 +55,15 @@ const Sortable = (props: {
   );
 };
 
-declare module "solid-js" {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface Directives {
-      droppable: boolean;
-      sortable: boolean;
-    }
-  }
+function getTierIds(tier: TierData) {
+  return tier.items.map((tier) => tier.id);
 }
-
 function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   function id() {
     return props.id;
   }
 
   const droppable = createDroppable(id());
-  function tierIds() {
-    return props.tier.items.map((tier) => tier.id);
-  }
 
   return (
     <div
@@ -80,7 +80,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
       }}
     >
       <ul class="flex flex-wrap gap-y-4">
-        <SortableProvider ids={tierIds()}>
+        <SortableProvider ids={getTierIds(props.tier)}>
           <For each={props.tier.items}>
             {(item) => {
               return (
@@ -114,39 +114,46 @@ const TierRow = (props: { tier: TierData; id: string }) => {
   );
 };
 
-function TierList() {
-  const [tiersStore, setTiersStore] = createStore<{ tiers: Array<TierData> }>({
-    tiers: mockTiers,
-  });
+export function getTierItemIdToTierDataRecord(tierData: Array<TierData>) {
+  return Object.fromEntries(
+    tierData.flatMap((tier) => {
+      return tier.items.map((item) => {
+        return [item.id, item];
+      });
+    }),
+  );
+}
 
-  function containersFromTiersStore() {
-    return Object.fromEntries(
-      tiersStore.tiers.map((tier) => [
-        tier.id,
-        tier.items.map((tier) => tier.id),
-      ]),
-    );
+export function containersFromTiersStore(
+  tiersStore: Store<{ tiers: Array<TierData> }>,
+) {
+  return Object.fromEntries(
+    tiersStore.tiers.map((tier) => [
+      tier.id,
+      tier.items.map((tier) => tier.id),
+    ]),
+  );
+}
+
+export function getIndex(containerItemIds: Array<string>, droppableId: string) {
+  const index = containerItemIds.indexOf(droppableId);
+  if (index === -1) {
+    return containerItemIds.length;
   }
+  return index;
+}
 
-  const tierItemIdToToTierDataRecord = () =>
-    Object.fromEntries(
-      tiersStore.tiers.flatMap((tier) => {
-        return tier.items.map((item) => {
-          return [item.id, item];
-        });
-      }),
-    );
+function _TierList() {
+  const [tiersStore, { updateTiers }] = useTiersContext();
 
-  const tierItemIdToTierData = (id: string) => {
-    return tierItemIdToToTierDataRecord()[id];
-  };
-
-  const containerIds = () => Object.keys(containersFromTiersStore());
+  const containerIds = () => Object.keys(containersFromTiersStore(tiersStore));
 
   const isContainer = (id: string) => containerIds().includes(id);
 
   const getContainer = (id: string) => {
-    for (const [key, items] of Object.entries(containersFromTiersStore())) {
+    for (const [key, items] of Object.entries(
+      containersFromTiersStore(tiersStore),
+    )) {
       if (items.includes(id)) {
         return key;
       }
@@ -173,7 +180,8 @@ function TierList() {
       context,
     );
     if (closestContainer) {
-      const containerItemIds = containersFromTiersStore()[closestContainer.id];
+      const containerItemIds =
+        containersFromTiersStore(tiersStore)[closestContainer.id];
       if (containerItemIds == null) {
         return null;
       }
@@ -210,14 +218,6 @@ function TierList() {
     return null;
   };
 
-  function getIndex(containerItemIds: Array<string>, droppableId: string) {
-    const index = containerItemIds.indexOf(droppableId);
-    if (index === -1) {
-      return containerItemIds.length;
-    }
-    return index;
-  }
-
   const move = (
     draggable: NonNullable<DragEvent["draggable"]>,
     droppable: NonNullable<DragEvent["droppable"]>,
@@ -245,37 +245,11 @@ function TierList() {
       draggableContainer !== droppableContainer ||
       !onlyWhenChangingContainer
     ) {
-      const containerItemIds = containersFromTiersStore()[droppableContainer];
-      if (containerItemIds == null) {
-        return;
-      }
-
-      const draggableTierItemData = tierItemIdToToTierDataRecord()[draggableId];
-      if (draggableTierItemData == null) {
-        return;
-      }
-
-      batch(() => {
-        const index = getIndex(containerItemIds, droppableId);
-        const draggableTierIndex = tiersStore.tiers.findIndex(
-          (tier) => tier.id === draggableContainer,
-        );
-        const droppableTierIndex = tiersStore.tiers.findIndex(
-          (tier) => tier.id === droppableContainer,
-        );
-
-        setTiersStore("tiers", draggableTierIndex, "items", (items) => {
-          // eslint-disable-next-line sonarjs/no-nested-functions
-          return items.filter((item) => item.id !== draggableId);
-        });
-
-        setTiersStore("tiers", droppableTierIndex, "items", (items) => {
-          return [
-            ...items.slice(0, index),
-            draggableTierItemData,
-            ...items.slice(index),
-          ];
-        });
+      updateTiers({
+        droppableContainer,
+        draggableId,
+        droppableId,
+        draggableContainer,
       });
     }
   };
@@ -318,7 +292,9 @@ function TierList() {
             if (draggable == null || typeof draggable.id !== "string") {
               return null;
             }
-            const item = tierItemIdToTierData(draggable.id);
+            const item = getTierItemIdToTierDataRecord(tiersStore.tiers)[
+              draggable.id
+            ];
 
             if (item == null) {
               return null;
@@ -336,4 +312,4 @@ function TierList() {
   );
 }
 
-export default TierList;
+export default _TierList;

@@ -1,5 +1,5 @@
 import type { VoidComponent } from "solid-js";
-import { ClientOnlyTierList } from "../../components/ClientOnlyTierList";
+import { TierList } from "../../components/tierlist/TierList";
 
 const Home: VoidComponent = () => {
   return (
@@ -9,7 +9,7 @@ const Home: VoidComponent = () => {
           Tier List
         </h1>
       </div>
-      <ClientOnlyTierList />
+      <TierList />
     </div>
   );
 };
