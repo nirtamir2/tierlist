@@ -97,7 +97,7 @@ export function TiersProvider(props: {
 
 export function useTiersContext() {
   const context = useContext(TiersContext);
-  if (!context) {
+  if (context == null) {
     throw new Error("useTiersContext: cannot find a TiersContext");
   }
   return context;

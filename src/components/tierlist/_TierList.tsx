@@ -14,10 +14,11 @@ import {
   createSortable,
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
-import { For, createSignal } from "solid-js";
+import { For } from "solid-js";
 import type { Store } from "solid-js/store";
 import type { TierData } from "../../server/hello/TierData";
 import { TierItem } from "../TierItem";
+import { DragProvider, useDrag } from "./DragContext";
 import { useTiersContext } from "./TiersContext";
 
 declare module "solid-js" {
@@ -31,11 +32,11 @@ declare module "solid-js" {
 }
 
 const Sortable = (props: {
-  isDragged: boolean;
   id: string;
   text: string;
   imageSrc: string | undefined;
 }) => {
+  const [isDragged] = useDrag();
   function id() {
     return props.id;
   }
@@ -49,7 +50,7 @@ const Sortable = (props: {
       class={clsx(
         "relative flex h-full touch-none will-change-[transform,_opacity]",
         sortable.isActiveDraggable && "opacity-20",
-        props.isDragged && "transition-[transform,_opacity]",
+        isDragged() && "transition-[transform,_opacity]",
       )}
     >
       <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
@@ -60,11 +61,7 @@ const Sortable = (props: {
 function getTierIds(tier: TierData) {
   return tier.items.map((tier) => tier.id);
 }
-function TiersDroppableItemsRow(props: {
-  tier: TierData;
-  id: string;
-  isDragged: boolean;
-}) {
+function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   function id() {
     return props.id;
   }
@@ -91,7 +88,6 @@ function TiersDroppableItemsRow(props: {
             {(item) => {
               return (
                 <Sortable
-                  isDragged={props.isDragged}
                   id={item.id}
                   imageSrc={item.imageSrc}
                   text={item.text}
@@ -105,7 +101,7 @@ function TiersDroppableItemsRow(props: {
   );
 }
 
-const TierRow = (props: { tier: TierData; id: string; isDragged: boolean }) => {
+const TierRow = (props: { tier: TierData; id: string }) => {
   return (
     <div class="flex w-full">
       <div
@@ -116,11 +112,7 @@ const TierRow = (props: { tier: TierData; id: string; isDragged: boolean }) => {
       >
         {props.tier.name}
       </div>
-      <TiersDroppableItemsRow
-        tier={props.tier}
-        id={props.id}
-        isDragged={props.isDragged}
-      />
+      <TiersDroppableItemsRow tier={props.tier} id={props.id} />
     </div>
   );
 };
@@ -154,7 +146,8 @@ export function getIndex(containerItemIds: Array<string>, droppableId: string) {
   return index;
 }
 
-function _TierList() {
+function ConnectedTierListWithout() {
+  const [, setIsDragActive] = useDrag();
   const [tiersStore, { updateTiers }] = useTiersContext();
 
   const containerIds = () => Object.keys(containersFromTiersStore(tiersStore));
@@ -265,8 +258,6 @@ function _TierList() {
     }
   };
 
-  const [isDragged, setIsDragged] = createSignal(false);
-
   const onDragOver: DragEventHandler = ({ draggable, droppable }) => {
     if (draggable && droppable) {
       move(draggable, droppable, true);
@@ -275,7 +266,7 @@ function _TierList() {
 
   const onDragEnd: DragEventHandler = ({ draggable, droppable }) => {
     if (draggable && droppable) {
-      setIsDragged(false);
+      setIsDragActive(false);
       move(draggable, droppable, false);
     }
   };
@@ -286,7 +277,7 @@ function _TierList() {
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
         onDragStart={() => {
-          setIsDragged(true);
+          setIsDragActive(true);
         }}
         collisionDetector={closestContainerOrItem}
       >
@@ -299,7 +290,7 @@ function _TierList() {
             }
             return (
               <li class="flex">
-                <TierRow id={key} tier={tier} isDragged={isDragged()} />
+                <TierRow id={key} tier={tier} />
               </li>
             );
           }}
@@ -329,4 +320,12 @@ function _TierList() {
   );
 }
 
-export default _TierList;
+function _TierListWithProvider() {
+  return (
+    <DragProvider>
+      <ConnectedTierListWithout />
+    </DragProvider>
+  );
+}
+
+export default _TierListWithProvider;
