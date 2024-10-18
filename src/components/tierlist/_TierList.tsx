@@ -14,7 +14,7 @@ import {
   createSortable,
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
-import { For } from "solid-js";
+import { For, createSignal } from "solid-js";
 import type { Store } from "solid-js/store";
 import type { TierData } from "../../server/hello/TierData";
 import { TierItem } from "../TierItem";
@@ -31,6 +31,7 @@ declare module "solid-js" {
 }
 
 const Sortable = (props: {
+  isDragged: boolean;
   id: string;
   text: string;
   imageSrc: string | undefined;
@@ -46,8 +47,9 @@ const Sortable = (props: {
     <div
       use:sortable
       class={clsx(
-        "relative flex h-full touch-none transition-[transform,_opacity] will-change-[transform,_opacity]",
+        "relative flex h-full touch-none will-change-[transform,_opacity]",
         sortable.isActiveDraggable && "opacity-20",
+        props.isDragged && "transition-[transform,_opacity]",
       )}
     >
       <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
@@ -58,7 +60,11 @@ const Sortable = (props: {
 function getTierIds(tier: TierData) {
   return tier.items.map((tier) => tier.id);
 }
-function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
+function TiersDroppableItemsRow(props: {
+  tier: TierData;
+  id: string;
+  isDragged: boolean;
+}) {
   function id() {
     return props.id;
   }
@@ -85,6 +91,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
             {(item) => {
               return (
                 <Sortable
+                  isDragged={props.isDragged}
                   id={item.id}
                   imageSrc={item.imageSrc}
                   text={item.text}
@@ -98,7 +105,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   );
 }
 
-const TierRow = (props: { tier: TierData; id: string }) => {
+const TierRow = (props: { tier: TierData; id: string; isDragged: boolean }) => {
   return (
     <div class="flex w-full">
       <div
@@ -109,7 +116,11 @@ const TierRow = (props: { tier: TierData; id: string }) => {
       >
         {props.tier.name}
       </div>
-      <TiersDroppableItemsRow tier={props.tier} id={props.id} />
+      <TiersDroppableItemsRow
+        tier={props.tier}
+        id={props.id}
+        isDragged={props.isDragged}
+      />
     </div>
   );
 };
@@ -254,6 +265,8 @@ function _TierList() {
     }
   };
 
+  const [isDragged, setIsDragged] = createSignal(false);
+
   const onDragOver: DragEventHandler = ({ draggable, droppable }) => {
     if (draggable && droppable) {
       move(draggable, droppable, true);
@@ -262,6 +275,7 @@ function _TierList() {
 
   const onDragEnd: DragEventHandler = ({ draggable, droppable }) => {
     if (draggable && droppable) {
+      setIsDragged(false);
       move(draggable, droppable, false);
     }
   };
@@ -271,6 +285,9 @@ function _TierList() {
       <DragDropProvider
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
+        onDragStart={() => {
+          setIsDragged(true);
+        }}
         collisionDetector={closestContainerOrItem}
       >
         <DragDropSensors />
@@ -282,7 +299,7 @@ function _TierList() {
             }
             return (
               <li class="flex">
-                <TierRow id={key} tier={tier} />
+                <TierRow id={key} tier={tier} isDragged={isDragged()} />
               </li>
             );
           }}
