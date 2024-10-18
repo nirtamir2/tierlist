@@ -9,11 +9,11 @@ export function NavBar() {
           Tierlist
         </h1>
       </a>
-      <div class="fle flex items-center gap-4">
-        <a href="tierlist/create" class="font-bold text-gray-300">
+      <div class="flex items-center gap-4">
+        <a href="/tierlist/create" class="font-bold text-gray-300">
           New Tier
         </a>
-        <a href="template/create" class="font-bold text-gray-300">
+        <a href="/template/create" class="font-bold text-gray-300">
           New Template
         </a>
         <div class="font-bold text-gray-300">Login</div>

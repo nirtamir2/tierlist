@@ -1,4 +1,5 @@
 // @refresh reload
+import "@fontsource/inter";
 import { MetaProvider, Title } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
