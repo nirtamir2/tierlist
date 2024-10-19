@@ -12,13 +12,13 @@ import {
   closestCenter,
   createDroppable,
   createSortable,
+  useDragDropContext,
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
 import { For } from "solid-js";
 import type { Store } from "solid-js/store";
 import type { TierData } from "../../server/hello/TierData";
 import { TierItem } from "../TierItem";
-import { DragProvider, useDrag } from "./DragContext";
 import { useTiersContext } from "./TiersContext";
 
 declare module "solid-js" {
@@ -36,7 +36,14 @@ const Sortable = (props: {
   text: string;
   imageSrc: string | undefined;
 }) => {
-  const [isDragged] = useDrag();
+  const dragDropContext = useDragDropContext();
+
+  if (dragDropContext == null) {
+    throw new Error("Sortable: DragDropProvider not provided");
+  }
+
+  const [dragDropContextState] = dragDropContext;
+
   function id() {
     return props.id;
   }
@@ -50,7 +57,8 @@ const Sortable = (props: {
       class={clsx(
         "relative flex h-full touch-none will-change-[transform,_opacity]",
         sortable.isActiveDraggable && "opacity-20",
-        isDragged() && "transition-[transform,_opacity]",
+        dragDropContextState.active.draggable != null &&
+          "transition-[transform,_opacity]",
       )}
     >
       <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
@@ -146,8 +154,7 @@ export function getIndex(containerItemIds: Array<string>, droppableId: string) {
   return index;
 }
 
-function ConnectedTierListWithout() {
-  const [, setIsDragActive] = useDrag();
+function _TierList() {
   const [tiersStore, { updateTiers }] = useTiersContext();
 
   const containerIds = () => Object.keys(containersFromTiersStore(tiersStore));
@@ -266,7 +273,6 @@ function ConnectedTierListWithout() {
 
   const onDragEnd: DragEventHandler = ({ draggable, droppable }) => {
     if (draggable && droppable) {
-      setIsDragActive(false);
       move(draggable, droppable, false);
     }
   };
@@ -276,9 +282,6 @@ function ConnectedTierListWithout() {
       <DragDropProvider
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
-        onDragStart={() => {
-          setIsDragActive(true);
-        }}
         collisionDetector={closestContainerOrItem}
       >
         <DragDropSensors />
@@ -320,12 +323,4 @@ function ConnectedTierListWithout() {
   );
 }
 
-function _TierListWithProvider() {
-  return (
-    <DragProvider>
-      <ConnectedTierListWithout />
-    </DragProvider>
-  );
-}
-
-export default _TierListWithProvider;
+export default _TierList;
