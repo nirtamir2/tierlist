@@ -2,11 +2,8 @@ import type { JSX } from "solid-js";
 import { batch, createContext, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { TierData } from "../../server/hello/TierData";
-import {
-  containersFromTiersStore,
-  getIndex,
-  getTierItemIdToTierDataRecord,
-} from "./_TierList";
+import { containersFromTiersStore } from "./containersFromTiersStore";
+import { getTierItemIdToTierDataRecord } from "./getTierItemIdToTierDataRecord";
 
 type ContextValue = [
   { tiers: Array<TierData> },
@@ -27,6 +24,14 @@ export const TiersContext = createContext<ContextValue>([
     },
   },
 ]);
+
+function getIndex(containerItemIds: Array<string>, droppableId: string) {
+  const index = containerItemIds.indexOf(droppableId);
+  if (index === -1) {
+    return containerItemIds.length;
+  }
+  return index;
+}
 
 export function TiersProvider(props: {
   initialTiers: Array<TierData>;

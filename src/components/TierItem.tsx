@@ -1,10 +1,13 @@
+import { createMediaQuery } from "@solid-primitives/media";
 import { Show } from "solid-js";
 
 export function TierItem(props: {
   imageSrc: string | undefined;
   text: string;
-  size: number;
 }) {
+  const isSmallScreen = createMediaQuery("(max-width: 767px)");
+  const size = () => (isSmallScreen() ? 56 : 112);
+
   return (
     <Show
       when={props.imageSrc}
@@ -18,8 +21,8 @@ export function TierItem(props: {
           class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
           src={props.imageSrc}
           alt={props.text}
-          height={props.size}
-          width={props.size}
+          height={size()}
+          width={size()}
         />
       }
     />

@@ -1,4 +1,3 @@
-import { createMediaQuery } from "@solid-primitives/media";
 import type {
   CollisionDetector,
   DragEvent,
@@ -16,10 +15,11 @@ import {
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
 import { For } from "solid-js";
-import type { Store } from "solid-js/store";
 import type { TierData } from "../../server/hello/TierData";
 import { TierItem } from "../TierItem";
 import { useTiersContext } from "./TiersContext";
+import { containersFromTiersStore } from "./containersFromTiersStore";
+import { getTierItemIdToTierDataRecord } from "./getTierItemIdToTierDataRecord";
 
 declare module "solid-js" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -49,8 +49,6 @@ const Sortable = (props: {
   }
 
   const sortable = createSortable(id());
-  const isSmallScreen = createMediaQuery("(max-width: 767px)");
-  const size = () => (isSmallScreen() ? 56 : 112);
   return (
     <div
       use:sortable
@@ -61,7 +59,7 @@ const Sortable = (props: {
           "transition-[transform,_opacity]",
       )}
     >
-      <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
+      <TierItem imageSrc={props.imageSrc} text={props.text} />
     </div>
   );
 };
@@ -124,35 +122,6 @@ const TierRow = (props: { tier: TierData; id: string }) => {
     </div>
   );
 };
-
-export function getTierItemIdToTierDataRecord(tierData: Array<TierData>) {
-  return Object.fromEntries(
-    tierData.flatMap((tier) => {
-      return tier.items.map((item) => {
-        return [item.id, item];
-      });
-    }),
-  );
-}
-
-export function containersFromTiersStore(
-  tiersStore: Store<{ tiers: Array<TierData> }>,
-) {
-  return Object.fromEntries(
-    tiersStore.tiers.map((tier) => [
-      tier.id,
-      tier.items.map((tier) => tier.id),
-    ]),
-  );
-}
-
-export function getIndex(containerItemIds: Array<string>, droppableId: string) {
-  const index = containerItemIds.indexOf(droppableId);
-  if (index === -1) {
-    return containerItemIds.length;
-  }
-  return index;
-}
 
 function _TierList() {
   const [tiersStore, { updateTiers }] = useTiersContext();
@@ -313,7 +282,7 @@ function _TierList() {
 
             return (
               <div class="flex w-full">
-                <TierItem imageSrc={item.imageSrc} text={item.text} size={16} />
+                <TierItem imageSrc={item.imageSrc} text={item.text} />
               </div>
             );
           }}
