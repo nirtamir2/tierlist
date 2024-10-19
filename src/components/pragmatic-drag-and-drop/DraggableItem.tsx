@@ -111,10 +111,11 @@ export function DraggableItem(props: {
       <Separator
         size={size()}
         direction="left"
-        isVisible={isDropping() && droppingDirection() === "left"}
-        item={<TierItem imageSrc={""} text={"LEFT"} size={size()} />}
+        isVisible={isDropping() ? droppingDirection() === "left" : null}
+        item={<TierItem imageSrc="" text="LEFT" size={size()} />}
       />
       <div
+        ref={ref}
         class={clsx(
           "relative flex h-full",
           isDragging() && !isDropping() && "hidden",
@@ -129,15 +130,14 @@ export function DraggableItem(props: {
               "after:absolute after:content-['Right']",
           ],
         )}
-        ref={ref}
       >
         <TierItem imageSrc={props.imageSrc} text={props.text} size={size()} />
       </div>
       <Separator
         size={size()}
         direction="right"
-        isVisible={isDropping() && droppingDirection() === "right"}
-        item={<TierItem imageSrc={""} text={"RIGHT"} size={size()} />}
+        isVisible={isDropping() ? droppingDirection() === "right" : null}
+        item={<TierItem imageSrc="" text="RIGHT" size={size()} />}
       />
     </>
   );

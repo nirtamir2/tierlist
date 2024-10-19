@@ -14,7 +14,7 @@ export function Separator(props: {
     <div class="pointer-events-none relative select-none">
       <div
         class={clsx(
-          "transition-w opacity-40 duration-300",
+          "opacity-40 transition-[width] duration-300",
           !isSmallScreen() && [
             props.direction === "right" ? "translate-x-1" : "-translate-x-1",
           ],

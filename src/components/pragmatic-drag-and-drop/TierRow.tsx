@@ -56,9 +56,8 @@ export function TierRow(props: { index: number; tier: TierData }) {
       }}
     >
       <ul class="flex flex-wrap gap-y-4">
-        <For
-          each={props.tier.items}
-          children={(item, index) => (
+        <For each={props.tier.items}>
+          {(item, index) => (
             <DraggableItem
               itemIndex={index()}
               tierId={props.tier.id}
@@ -68,7 +67,7 @@ export function TierRow(props: { index: number; tier: TierData }) {
               imageSrc={item.imageSrc}
             />
           )}
-        />
+        </For>
       </ul>
     </div>
   );

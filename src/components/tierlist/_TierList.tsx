@@ -249,9 +249,9 @@ function _TierList() {
   return (
     <ul class="flex flex-col gap-2 bg-gray-800">
       <DragDropProvider
+        collisionDetector={closestContainerOrItem}
         onDragOver={onDragOver}
         onDragEnd={onDragEnd}
-        collisionDetector={closestContainerOrItem}
       >
         <DragDropSensors />
         <For each={containerIds()}>

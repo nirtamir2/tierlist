@@ -208,9 +208,8 @@ export default function _PragmaticTierList() {
 
   return (
     <ul class="flex flex-col gap-2 bg-gray-800">
-      <For
-        each={tiersStore.tiers}
-        children={(tier, index) => (
+      <For each={tiersStore.tiers}>
+        {(tier, index) => (
           <li class="flex">
             <div
               class="flex min-h-32 min-w-16 items-center justify-center rounded-l-lg text-2xl font-bold sm:min-w-32"
@@ -223,7 +222,7 @@ export default function _PragmaticTierList() {
             <TierRow index={index()} tier={tier} />
           </li>
         )}
-      />
+      </For>
     </ul>
   );
 }

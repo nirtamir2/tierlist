@@ -16,15 +16,14 @@ export function TierItem(props: {
           {props.text}
         </div>
       }
-      children={
-        <img
-          class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
-          src={props.imageSrc}
-          alt={props.text}
-          height={size()}
-          width={size()}
-        />
-      }
-    />
+    >
+      <img
+        class="pointer-events-none aspect-square size-14 select-none rounded-xl object-fill drop-shadow-md sm:size-28"
+        src={props.imageSrc}
+        alt={props.text}
+        height={size()}
+        width={size()}
+      />
+    </Show>
   );
 }
