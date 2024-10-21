@@ -14,9 +14,11 @@ import {
   useDragDropContext,
 } from "@thisbeyond/solid-dnd";
 import { clsx } from "clsx";
-import { For } from "solid-js";
+import { For, createUniqueId } from "solid-js";
+import { Portal } from "solid-js/web";
 import type { TierData } from "../../server/hello/TierData";
 import { TierItem } from "../TierItem";
+import { TIERS_BANK_ID } from "./TIERS_BANK_ID";
 import { useTiersContext } from "./TiersContext";
 import { containersFromTiersStore } from "./containersFromTiersStore";
 import { getTierItemIdToTierDataRecord } from "./getTierItemIdToTierDataRecord";
@@ -77,7 +79,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
   return (
     <div
       use:droppable
-      class="grow rounded-r-lg border bg-gradient-to-r from-gray-800 to-gray-700 p-2"
+      class="size-full rounded-r-lg border bg-gradient-to-r from-gray-800 to-gray-700 p-2"
       style={{
         "border-color": props.tier.color,
         "box-shadow": `inset 0 2px 4px 0 color-mix(in lch, ${props.tier.color}, transparent 10%)`,
@@ -88,7 +90,7 @@ function TiersDroppableItemsRow(props: { tier: TierData; id: string }) {
                 )`,
       }}
     >
-      <ul class="flex flex-wrap gap-y-4">
+      <ul class="flex min-h-16 flex-wrap gap-y-4 sm:min-h-28">
         <SortableProvider ids={getTierIds(props.tier)}>
           <For each={props.tier.items}>
             {(item) => {
@@ -118,13 +120,17 @@ const TierRow = (props: { tier: TierData; id: string }) => {
       >
         {props.tier.name}
       </div>
-      <TiersDroppableItemsRow tier={props.tier} id={props.id} />
+      <div class="flex-1 grow">
+        <TiersDroppableItemsRow tier={props.tier} id={props.id} />
+      </div>
     </div>
   );
 };
 
 function _TierList() {
   const [tiersStore, { updateTiers }] = useTiersContext();
+
+  const bankElementId = createUniqueId();
 
   const containerIds = () => Object.keys(containersFromTiersStore(tiersStore));
 
@@ -247,7 +253,7 @@ function _TierList() {
   };
 
   return (
-    <ul class="flex flex-col gap-2 bg-gray-800">
+    <ul class="flex flex-col gap-2">
       <DragDropProvider
         collisionDetector={closestContainerOrItem}
         onDragOver={onDragOver}
@@ -255,14 +261,26 @@ function _TierList() {
       >
         <DragDropSensors />
         <For each={containerIds()}>
-          {(key) => {
-            const tier = tiersStore.tiers.find((tier) => tier.id === key);
+          {(id) => {
+            const tier = tiersStore.tiers.find((tier) => tier.id === id);
             if (tier == null) {
               return null;
             }
+
+            if (id === TIERS_BANK_ID) {
+              return (
+                <Portal mount={document.querySelector(`#${bankElementId}`)!}>
+                  <div class="flex h-36 w-full overflow-auto bg-gray-800">
+                    <div class="min-w-16 sm:min-w-32" />
+                    <TiersDroppableItemsRow id={id} tier={tier} />
+                  </div>
+                </Portal>
+              );
+            }
+
             return (
-              <li class="flex">
-                <TierRow id={key} tier={tier} />
+              <li class="flex bg-gray-800">
+                <TierRow id={id} tier={tier} />
               </li>
             );
           }}
@@ -287,6 +305,7 @@ function _TierList() {
             );
           }}
         </DragOverlay>
+        <div class="sticky bottom-0 w-full" id={bankElementId} />
       </DragDropProvider>
     </ul>
   );
