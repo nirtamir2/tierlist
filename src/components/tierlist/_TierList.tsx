@@ -270,7 +270,7 @@ function _TierList() {
             if (id === TIERS_BANK_ID) {
               return (
                 <Portal mount={document.querySelector(`#${bankElementId}`)!}>
-                  <div class="flex max-h-36 min-h-32 w-full overflow-auto rounded border bg-gray-800 py-2">
+                  <div class="flex max-h-36 min-h-32 w-full overflow-auto rounded border bg-gray-800">
                     <div class="min-w-16 sm:min-w-32" />
                     <TiersDroppableItemsRow id={id} tier={tier} />
                   </div>
