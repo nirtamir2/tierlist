@@ -9,7 +9,7 @@ export default nirtamir2(
   [
     {
       rules: {
-        "n/prefer-global/process": "off",
+        "n/prefer-global/process": ["error", "always"],
 
         // Solid.js specific
         "sonarjs/no-unstable-nested-components": "off", // for Show callbacks

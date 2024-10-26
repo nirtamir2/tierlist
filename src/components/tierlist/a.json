@@ -1,0 +1,473 @@
+{
+  "id": "8f28af88-9a4f-445e-a570-b70628bbec45",
+  "title": "Frameworks",
+  "description": "Javascript Frameworks",
+  "categoryId": null,
+  "ownerUserId": null,
+  "imageSrc": null,
+  "createdAt": "2024-10-26T10:47:46.288Z",
+  "updatedAt": "2024-10-26T10:47:46.288Z",
+  "category": null,
+  "tierRows": [
+    {
+      "id": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "S",
+      "color": "#DC2626",
+      "createdAt": "2024-10-26T10:47:46.778Z",
+      "updatedAt": "2024-10-26T10:47:46.778Z",
+      "items": [
+        {
+          "id": "21a601f3-d3ab-46d3-9559-68445290cfe0",
+          "text": "Nuxt",
+          "imageSrc": "https://svgl.app/library/nuxt.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:46.945Z",
+          "updatedAt": "2024-10-26T10:47:46.945Z"
+        },
+        {
+          "id": "a9b10213-f92f-4e80-81fc-79f961037ed0",
+          "text": "Playwright",
+          "imageSrc": "https://svgl.app/library/playwright.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.101Z",
+          "updatedAt": "2024-10-26T10:47:47.101Z"
+        },
+        {
+          "id": "d7c3916d-40f6-4862-adde-a8753645d69d",
+          "text": "PM2",
+          "imageSrc": "https://svgl.app/library/pm2.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.257Z",
+          "updatedAt": "2024-10-26T10:47:47.257Z"
+        },
+        {
+          "id": "2d45c215-490a-46bb-a3f8-96dd83524d55",
+          "text": "Qwik",
+          "imageSrc": "https://svgl.app/library/qwik.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.411Z",
+          "updatedAt": "2024-10-26T10:47:47.411Z"
+        },
+        {
+          "id": "410c72b8-c3ed-4352-97c2-9a22acfaab3c",
+          "text": "React Query",
+          "imageSrc": "https://svgl.app/library/reactquery.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.570Z",
+          "updatedAt": "2024-10-26T10:47:47.570Z"
+        },
+        {
+          "id": "f2b785f4-af70-4d5d-bf6c-bf31ece36695",
+          "text": "RedwoodJS",
+          "imageSrc": "https://svgl.app/library/redwoodjs.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.721Z",
+          "updatedAt": "2024-10-26T10:47:47.721Z"
+        },
+        {
+          "id": "2298fcee-e6e8-4ae7-9d7d-27e2631b4ccf",
+          "text": "Refine",
+          "imageSrc": "https://svgl.app/library/refine_light.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:47.880Z",
+          "updatedAt": "2024-10-26T10:47:47.880Z"
+        },
+        {
+          "id": "4aa71c51-03ce-4cbc-9ace-a293b131dbb5",
+          "text": "Remix",
+          "imageSrc": "https://svgl.app/library/remix_dark.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.036Z",
+          "updatedAt": "2024-10-26T10:47:48.036Z"
+        },
+        {
+          "id": "8ef9990b-d175-404b-ba61-fdeb56149d76",
+          "text": "Remotion",
+          "imageSrc": "https://svgl.app/library/remotion.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.192Z",
+          "updatedAt": "2024-10-26T10:47:48.192Z"
+        },
+        {
+          "id": "81e6ded0-cb26-4d15-90e2-09db98b30284",
+          "text": "Sequelize",
+          "imageSrc": "https://svgl.app/library/sequelize.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.346Z",
+          "updatedAt": "2024-10-26T10:47:48.346Z"
+        },
+        {
+          "id": "8b8fd4b1-7913-4229-802a-c9963ea1cfb2",
+          "text": "Solidjs",
+          "imageSrc": "https://svgl.app/library/solidjs.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.502Z",
+          "updatedAt": "2024-10-26T10:47:48.502Z"
+        },
+        {
+          "id": "2921bf8a-7f10-44c1-8311-2946785d839b",
+          "text": "Spring",
+          "imageSrc": "https://svgl.app/library/spring.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.656Z",
+          "updatedAt": "2024-10-26T10:47:48.656Z"
+        },
+        {
+          "id": "b993ae82-0b35-47bf-94e8-7d2b2ad41a3b",
+          "text": "SST",
+          "imageSrc": "https://svgl.app/library/sst.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.810Z",
+          "updatedAt": "2024-10-26T10:47:48.810Z"
+        },
+        {
+          "id": "9a95bf80-b7aa-4e8b-af96-9cadd7ba585f",
+          "text": "Stimulus",
+          "imageSrc": "https://svgl.app/library/stimulus.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:48.962Z",
+          "updatedAt": "2024-10-26T10:47:48.962Z"
+        },
+        {
+          "id": "7e19a67a-7b79-4b8e-b23d-464e8b0a02cb",
+          "text": "T3 Stack",
+          "imageSrc": "https://svgl.app/library/t3-light.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:49.120Z",
+          "updatedAt": "2024-10-26T10:47:49.120Z"
+        },
+        {
+          "id": "d89a3743-242a-47c2-925d-3d10df068986",
+          "text": "Tailwind CSS",
+          "imageSrc": "https://svgl.app/library/tailwindcss.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:49.270Z",
+          "updatedAt": "2024-10-26T10:47:49.270Z"
+        },
+        {
+          "id": "2a171773-5de4-44b5-ad8d-ae233d7636f9",
+          "text": "Vitest",
+          "imageSrc": "https://svgl.app/library/vitest.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:49.424Z",
+          "updatedAt": "2024-10-26T10:47:49.424Z"
+        },
+        {
+          "id": "e61bc8c1-df86-4ddc-8990-8f6c234fbee8",
+          "text": "Vue",
+          "imageSrc": "https://svgl.app/library/vue.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:49.576Z",
+          "updatedAt": "2024-10-26T10:47:49.576Z"
+        },
+        {
+          "id": "0fc68cf2-c592-40a2-bd51-2a06b9e8060d",
+          "text": "WindiCSS",
+          "imageSrc": "https://svgl.app/library/windicss.svg",
+          "tierRowId": "494e2a3a-c1c5-40e0-9a7c-19abcb7ab659",
+          "createdAt": "2024-10-26T10:47:49.737Z",
+          "updatedAt": "2024-10-26T10:47:49.737Z"
+        }
+      ]
+    },
+    {
+      "id": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "A",
+      "color": "#EA580D",
+      "createdAt": "2024-10-26T10:47:49.889Z",
+      "updatedAt": "2024-10-26T10:47:49.889Z",
+      "items": [
+        {
+          "id": "8968e059-b195-43c3-9038-ec1cf6cb26e7",
+          "text": "Flowbite",
+          "imageSrc": "https://svgl.app/library/flowbite.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.044Z",
+          "updatedAt": "2024-10-26T10:47:50.044Z"
+        },
+        {
+          "id": "0292acb4-5c73-401c-ae74-c2b82879db05",
+          "text": "Flutter",
+          "imageSrc": "https://svgl.app/library/flutter.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.197Z",
+          "updatedAt": "2024-10-26T10:47:50.197Z"
+        },
+        {
+          "id": "70c0bba9-112f-46e9-9fbe-7cacd8d0bc81",
+          "text": "Fresh",
+          "imageSrc": "https://svgl.app/library/fresh.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.357Z",
+          "updatedAt": "2024-10-26T10:47:50.357Z"
+        },
+        {
+          "id": "068b1f81-b313-4c25-b0ee-f2524ba5001b",
+          "text": "Gatsby",
+          "imageSrc": "https://svgl.app/library/gatsby.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.511Z",
+          "updatedAt": "2024-10-26T10:47:50.511Z"
+        },
+        {
+          "id": "688b35f9-41b4-4132-ace0-10520a27589e",
+          "text": "Hono",
+          "imageSrc": "https://svgl.app/library/hono.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.693Z",
+          "updatedAt": "2024-10-26T10:47:50.693Z"
+        },
+        {
+          "id": "224e84e2-7aac-4799-ae78-fc22cedb7554",
+          "text": "Hugo",
+          "imageSrc": "https://svgl.app/library/hugo.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:50.854Z",
+          "updatedAt": "2024-10-26T10:47:50.854Z"
+        },
+        {
+          "id": "def320dc-d4ff-4547-b4b5-20eaa022ddcf",
+          "text": "Jasmine",
+          "imageSrc": "https://svgl.app/library/jasmine.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.046Z",
+          "updatedAt": "2024-10-26T10:47:51.046Z"
+        },
+        {
+          "id": "42a9fb98-ea24-4e0f-86d5-bc7d3a80a8a9",
+          "text": "Jest",
+          "imageSrc": "https://svgl.app/library/jest.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.198Z",
+          "updatedAt": "2024-10-26T10:47:51.198Z"
+        },
+        {
+          "id": "de3b3ae0-f555-4dd2-9392-0bc866c4c4f9",
+          "text": "KrakenJS",
+          "imageSrc": "https://svgl.app/library/krakenjs.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.355Z",
+          "updatedAt": "2024-10-26T10:47:51.355Z"
+        },
+        {
+          "id": "74f7131f-6c0e-4270-a9d2-cd2f1c0eb0ae",
+          "text": "Laravel",
+          "imageSrc": "https://svgl.app/library/laravel.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.506Z",
+          "updatedAt": "2024-10-26T10:47:51.506Z"
+        },
+        {
+          "id": "c3f334d3-a49f-4b67-ba20-8dca25237450",
+          "text": "Material UI",
+          "imageSrc": "https://svgl.app/library/materialui.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.658Z",
+          "updatedAt": "2024-10-26T10:47:51.658Z"
+        },
+        {
+          "id": "5603c199-4cda-425c-a725-f6f3907494a4",
+          "text": "Moon",
+          "imageSrc": "https://svgl.app/library/moon.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.807Z",
+          "updatedAt": "2024-10-26T10:47:51.807Z"
+        },
+        {
+          "id": "31375092-92bd-4627-84c8-aa287e41b23b",
+          "text": "NestJS",
+          "imageSrc": "https://svgl.app/library/nestjs.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:51.965Z",
+          "updatedAt": "2024-10-26T10:47:51.965Z"
+        },
+        {
+          "id": "18c31226-2564-4c8a-8f9f-636fb8344ed8",
+          "text": "Next.js",
+          "imageSrc": "https://svgl.app/library/nextjs_icon_dark.svg",
+          "tierRowId": "a7b8aaa6-3a27-4312-a127-d462f2f753fa",
+          "createdAt": "2024-10-26T10:47:52.118Z",
+          "updatedAt": "2024-10-26T10:47:52.118Z"
+        }
+      ]
+    },
+    {
+      "id": "d91e1557-9950-4754-99bd-56f272457a0c",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "B",
+      "color": "#CA8A05",
+      "createdAt": "2024-10-26T10:47:52.273Z",
+      "updatedAt": "2024-10-26T10:47:52.273Z",
+      "items": [
+        {
+          "id": "96c29a7b-5b17-421d-af92-8a8789aa8012",
+          "text": "Angular",
+          "imageSrc": "https://svgl.app/library/angular.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:52.426Z",
+          "updatedAt": "2024-10-26T10:47:52.426Z"
+        },
+        {
+          "id": "6183a84c-6882-4e86-ad70-168ad9da2d2f",
+          "text": "Astro",
+          "imageSrc": "https://svgl.app/library/astro.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:52.580Z",
+          "updatedAt": "2024-10-26T10:47:52.580Z"
+        },
+        {
+          "id": "e1972221-c366-4e2c-b866-34301e75e569",
+          "text": "Blitz",
+          "imageSrc": "https://svgl.app/library/blitzjs.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:52.731Z",
+          "updatedAt": "2024-10-26T10:47:52.731Z"
+        },
+        {
+          "id": "8b2d4f6c-573f-407f-994b-2778a0449538",
+          "text": "Bootstrap",
+          "imageSrc": "https://svgl.app/library/bootstrap.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:52.882Z",
+          "updatedAt": "2024-10-26T10:47:52.882Z"
+        },
+        {
+          "id": "7942025a-cf91-4587-8cff-21563c05c9cf",
+          "text": "Crossplane",
+          "imageSrc": "https://svgl.app/library/crossplane.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.034Z",
+          "updatedAt": "2024-10-26T10:47:53.034Z"
+        },
+        {
+          "id": "99cd90f9-f701-4ef0-add7-98bc5efae3bd",
+          "text": "Cypress",
+          "imageSrc": "https://svgl.app/library/cypress.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.188Z",
+          "updatedAt": "2024-10-26T10:47:53.188Z"
+        },
+        {
+          "id": "604db549-b7e5-4a3e-962f-bcef13aacb05",
+          "text": "Django",
+          "imageSrc": "https://svgl.app/library/django.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.341Z",
+          "updatedAt": "2024-10-26T10:47:53.341Z"
+        },
+        {
+          "id": "221a93fb-0cac-4703-8387-5dbde4fc6dfb",
+          "text": "ElysiaJS",
+          "imageSrc": "https://svgl.app/library/elysiajs.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.495Z",
+          "updatedAt": "2024-10-26T10:47:53.495Z"
+        },
+        {
+          "id": "1a2d00f7-0d7e-47a6-b2fc-b7427f10913e",
+          "text": "Ember",
+          "imageSrc": "https://svgl.app/library/ember.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.643Z",
+          "updatedAt": "2024-10-26T10:47:53.643Z"
+        },
+        {
+          "id": "c97f270f-bcd0-4495-aab4-f534a0edc049",
+          "text": "Express.js",
+          "imageSrc": "https://svgl.app/library/expressjs.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.798Z",
+          "updatedAt": "2024-10-26T10:47:53.798Z"
+        },
+        {
+          "id": "fe61a687-1961-47f5-a207-9548c8e4307c",
+          "text": "FastAPI",
+          "imageSrc": "https://svgl.app/library/fastapi.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:53.951Z",
+          "updatedAt": "2024-10-26T10:47:53.951Z"
+        },
+        {
+          "id": "7dd24d0a-0270-444b-8838-c8ee7e9a9d79",
+          "text": "Fastify",
+          "imageSrc": "https://svgl.app/library/fastify.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:54.108Z",
+          "updatedAt": "2024-10-26T10:47:54.108Z"
+        },
+        {
+          "id": "9a83685b-7c48-4326-856a-bb1c52781bb7",
+          "text": "Flask",
+          "imageSrc": "https://svgl.app/library/flask-dark.svg",
+          "tierRowId": "d91e1557-9950-4754-99bd-56f272457a0c",
+          "createdAt": "2024-10-26T10:47:54.262Z",
+          "updatedAt": "2024-10-26T10:47:54.262Z"
+        }
+      ]
+    },
+    {
+      "id": "5de13b9e-9086-4295-8b28-b9bea08efc39",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "C",
+      "color": "#12A34A",
+      "createdAt": "2024-10-26T10:47:54.420Z",
+      "updatedAt": "2024-10-26T10:47:54.420Z",
+      "items": [
+        {
+          "id": "8c3749e8-e429-4aa4-ae57-7b40855fe0f8",
+          "text": "Item 9",
+          "imageSrc": null,
+          "tierRowId": "5de13b9e-9086-4295-8b28-b9bea08efc39",
+          "createdAt": "2024-10-26T10:47:54.574Z",
+          "updatedAt": "2024-10-26T10:47:54.574Z"
+        },
+        {
+          "id": "90ee239a-efd3-48ec-b867-193f169a81ee",
+          "text": "Item 10",
+          "imageSrc": null,
+          "tierRowId": "5de13b9e-9086-4295-8b28-b9bea08efc39",
+          "createdAt": "2024-10-26T10:47:54.732Z",
+          "updatedAt": "2024-10-26T10:47:54.732Z"
+        }
+      ]
+    },
+    {
+      "id": "99dcf645-3cd0-453b-839e-145d5d258240",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "D",
+      "color": "#2563EB",
+      "createdAt": "2024-10-26T10:47:54.882Z",
+      "updatedAt": "2024-10-26T10:47:54.882Z",
+      "items": [
+        {
+          "id": "327a8291-1720-469a-8668-23f44e807226",
+          "text": "Item 11",
+          "imageSrc": null,
+          "tierRowId": "99dcf645-3cd0-453b-839e-145d5d258240",
+          "createdAt": "2024-10-26T10:47:55.034Z",
+          "updatedAt": "2024-10-26T10:47:55.034Z"
+        }
+      ]
+    },
+    {
+      "id": "6dc00801-f75c-48b5-b127-d863132a9ec5",
+      "tierlistId": "8f28af88-9a4f-445e-a570-b70628bbec45",
+      "name": "F",
+      "color": "#9333EA",
+      "createdAt": "2024-10-26T10:47:55.189Z",
+      "updatedAt": "2024-10-26T10:47:55.189Z",
+      "items": [
+        {
+          "id": "3e7ea4bc-df65-4ec7-94d3-a019a4698259",
+          "text": "Item 12",
+          "imageSrc": null,
+          "tierRowId": "6dc00801-f75c-48b5-b127-d863132a9ec5",
+          "createdAt": "2024-10-26T10:47:55.343Z",
+          "updatedAt": "2024-10-26T10:47:55.343Z"
+        }
+      ]
+    }
+  ]
+}

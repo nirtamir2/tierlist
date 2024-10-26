@@ -36,7 +36,7 @@ declare module "solid-js" {
 const Sortable = (props: {
   id: string;
   text: string;
-  imageSrc: string | undefined;
+  imageSrc: string | null;
 }) => {
   const dragDropContext = useDragDropContext();
 

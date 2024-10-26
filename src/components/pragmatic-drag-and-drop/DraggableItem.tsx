@@ -27,7 +27,7 @@ export function DraggableItem(props: {
   tierIndex: number;
   itemIndex: number;
   text: string;
-  imageSrc: string | undefined;
+  imageSrc: string | null;
 }) {
   let ref: HTMLDivElement = null!;
   const [isDragging, setIsDragging] = createSignal(false);

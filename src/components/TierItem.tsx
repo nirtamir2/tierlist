@@ -1,10 +1,7 @@
 import { createMediaQuery } from "@solid-primitives/media";
 import { Show } from "solid-js";
 
-export function TierItem(props: {
-  imageSrc: string | undefined;
-  text: string;
-}) {
+export function TierItem(props: { imageSrc: string | null; text: string }) {
   const isSmallScreen = createMediaQuery("(max-width: 767px)");
   const size = () => (isSmallScreen() ? 56 : 112);
 

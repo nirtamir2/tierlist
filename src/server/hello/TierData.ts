@@ -5,6 +5,6 @@ export type TierData = {
   items: Array<{
     id: string;
     text: string;
-    imageSrc: string | undefined;
+    imageSrc: string | null;
   }>;
 };

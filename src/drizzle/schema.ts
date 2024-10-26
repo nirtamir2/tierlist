@@ -1,29 +1,81 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-// Define the Tiers table
-export const tiers = pgTable("tiers", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  name: varchar("name", { length: 255 }),
-  color: varchar("color", { length: 7 }), // Color in hex format (#XXXXXX)
+const createAndUpdateTimestamp = {
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date()),
+};
+
+const id = text("id")
+  .primaryKey()
+  .$defaultFn(() => crypto.randomUUID());
+
+export const tierlistCatrogries = pgTable("tierlist_catrogries", {
+  id,
+  title: varchar("name", { length: 256 }).notNull(),
+  description: text("description").notNull(),
+  imageSrc: text("image_src"),
+  ...createAndUpdateTimestamp,
 });
 
-// Define the Items table
-export const items = pgTable("items", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  text: varchar("text", { length: 255 }),
-  imageSrc: text("image_src"), // Some items may not have an image
-  tierId: varchar("tier_id", { length: 255 }).references(() => tiers.id), // Foreign key to the Tiers table
+export const tierlists = pgTable("tierlists", {
+  id,
+  title: varchar("name", { length: 256 }).notNull(),
+  description: text("description").notNull(),
+  categoryId: text("category_id").references(() => tierlistCatrogries.id),
+  ownerUserId: text("owner_user_id"),
+  imageSrc: text("image_src"),
+  ...createAndUpdateTimestamp,
 });
 
-// Define relations
-export const tierRelations = relations(tiers, ({ many }) => ({
-  items: many(items),
+export const tierRows = pgTable("tier_rows", {
+  id,
+  tierlistId: text("tierlids_id")
+    .references(() => tierlists.id)
+    .notNull(),
+  name: varchar("name", { length: 256 }).notNull(),
+  color: varchar("color", { length: 7 }).notNull(), // Color in hex format (#XXXXXX)
+  ...createAndUpdateTimestamp,
+});
+
+export const tierItems = pgTable("tier_item", {
+  id,
+  text: varchar("text", { length: 256 }).notNull(),
+  imageSrc: text("image_src"),
+  tierRowId: text("tier_row_id")
+    .references(() => tierRows.id)
+    .notNull(),
+  ...createAndUpdateTimestamp,
+});
+
+export const tierlistCatrogriesRelations = relations(
+  tierlistCatrogries,
+  ({ many }) => ({
+    tierlists: many(tierlists),
+  }),
+);
+
+export const tierlistsRelations = relations(tierlists, ({ one, many }) => ({
+  category: one(tierlistCatrogries, {
+    fields: [tierlists.categoryId],
+    references: [tierlistCatrogries.id],
+  }),
+  tierRows: many(tierRows),
 }));
 
-export const itemRelations = relations(items, ({ one }) => ({
-  tier: one(tiers, {
-    fields: [items.tierId],
-    references: [tiers.id],
+export const tierRowsRelations = relations(tierRows, ({ one, many }) => ({
+  tierlist: one(tierlists, {
+    fields: [tierRows.tierlistId],
+    references: [tierlists.id],
+  }),
+  items: many(tierItems),
+}));
+
+export const tierItemRelations = relations(tierItems, ({ one }) => ({
+  tierRow: one(tierRows, {
+    fields: [tierItems.tierRowId],
+    references: [tierRows.id],
   }),
 }));
