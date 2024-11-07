@@ -1,9 +1,15 @@
-import { createAsync } from "@solidjs/router";
+import { cache, createAsync } from "@solidjs/router";
 import { Show, Suspense } from "solid-js";
 import { ClientOnlyTierList } from "./ClientOnlyTierList";
 import { TIERS_BANK_ID } from "./TIERS_BANK_ID";
 import { TiersProvider } from "./TiersContext";
-import { getAllTierlistsWithRelations } from "./server";
+import { fetchAllTierlists } from "./server";
+
+const getAllTierlistsWithRelations = cache(async () => {
+  "use server";
+  const allTierlists = await fetchAllTierlists();
+  return allTierlists;
+}, "tierlists");
 
 export function TierList() {
   const a = createAsync(async () => {

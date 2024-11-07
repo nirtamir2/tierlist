@@ -22,10 +22,8 @@ export const getTierlistWithRelations = cache(async (tierlistId: string) => {
   return tierlist;
 }, "tierlist");
 
-// Function to get all tierlists with relations
-export const getAllTierlistsWithRelations = cache(async () => {
-  "use server";
-  const allTierlists = await db.query.tierlists.findMany({
+export async function fetchAllTierlists() {
+  return await db.query.tierlists.findMany({
     with: {
       category: true,
       tierRows: {
@@ -35,9 +33,7 @@ export const getAllTierlistsWithRelations = cache(async () => {
       },
     },
   });
-
-  return allTierlists;
-}, "tierlists");
+}
 
 export const getCategoriesWithTierlists = cache(async () => {
   const categories = await db.query.tierlistCatrogries.findMany({
