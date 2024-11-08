@@ -7,8 +7,7 @@ import { fetchAllTierlists } from "./server";
 
 const getAllTierlistsWithRelations = cache(async () => {
   "use server";
-  const allTierlists = await fetchAllTierlists();
-  return allTierlists;
+  return await fetchAllTierlists();
 }, "tierlists");
 
 export function TierList() {

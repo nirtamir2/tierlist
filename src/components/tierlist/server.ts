@@ -1,26 +1,9 @@
 import { cache } from "@solidjs/router";
 import { eq } from "drizzle-orm";
 import { db } from "../../drizzle/db";
-import { tierlistCatrogries, tierlists } from "../../drizzle/schema";
+import { tierlistCatrogries } from "../../drizzle/schema";
 
 // Adjust this import based on your setup
-
-export const getTierlistWithRelations = cache(async (tierlistId: string) => {
-  "use server";
-  const tierlist = await db.query.tierlists.findFirst({
-    where: eq(tierlists.id, tierlistId),
-    with: {
-      category: true,
-      tierRows: {
-        with: {
-          items: true,
-        },
-      },
-    },
-  });
-
-  return tierlist;
-}, "tierlist");
 
 export async function fetchAllTierlists() {
   return await db.query.tierlists.findMany({
